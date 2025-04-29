@@ -1,11 +1,16 @@
 #ifndef SERVIDOR_H
 #define SERVIDOR_H
 
-#include "Comun.h"
 #include "Lista.h"
 #include "Cola.h"
 
-class Servidor{
+#define ACTIVO        "ACTIVO"
+#define INACTIVO      "INACTIVO"
+#define MANTENIMIENTO "MANTENIMIENTO"
+
+class Servidor
+{
+private:
     cadena direccionServidor;       //direccion IP/hostname del servidor de juegos.
     cadena nombreJuego;             //nombre del juego jugado en el servidor.
     int id;                         /*código numérico (entero positivo) utilizado en el ámbito interno de la compañía para
@@ -22,25 +27,21 @@ class Servidor{
     int puerto;                     //número del puerto de escucha del servidor;
     cadena localizacionGeografica;  //país en el que se encuentra ubicado físicamente el servidor.
 
+    void mostrarJugadoresFormateado(Jugador j, bool cabecera);
+
 public:
     ~Servidor();
+    //HACER
 
     Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG);
-    //método constructor que inicializa los atributos direccionServidor, nombreJuego, id,
-    //maxJugadoresConectados, maxJugadoresEnEspera, puerto y localizacionGeografica con,
-    //respectivamente, dS, nJ, i, mxL, mxC, p y lG. Además, inicializa el atributo estado a “INACTIVO”.
 
     int getId();
-    //devuelve el valor del atributo id.
 
     void getDireccionServidor(cadena dS);
-    //devuelve el valor de direccionServidor a través del parámetro de entrada/salida dS.
 
     void setSiguienteServidor(Servidor *pS);
-    //asigna el valor recibido como parámetro al atributo siguienteServidor.
 
     Servidor* getSiguienteServidor();
-    //devuelve el valor del atributo siguienteServidor.
 
     bool conectarJugador(Jugador j);
     //aloja al jugador j en el servidor, esto es, lo añade a la lista listaConectados siempre y cuando
@@ -56,20 +57,12 @@ public:
     //enconlar exitosamente al jugador; false en caso contrario.
 
     void mostrarJugadoresConectados();
-    //muestra por pantalla el nombre, el identificador numérico, el ping(latencia), la puntuación global
-    //y el país desde el que se conecta cada uno de los jugadores alojados en el servidor.
 
     void mostrarJugadoresEnEspera();
-    //muestra por pantalla el nombre, el identificador numérico, el ping(latencia) y la puntuación global
-    //y el país desde el que se conecta cada uno de los jugadores que se encuentran esperando poder
-    //acceder al servidor.
 
     bool estaActivo();
-    //devuelve true si el estado del servidor es ACTIVO; false en caso contrario.
 
-    bool activar(); //activa un servidor en estado INACTIVO o MANTENIMIENTO. Si el servidor ya estaba
-    //activado, el método devolverá false; true en caso contrario, confirmando así que el servidor ha
-    //sido activado.
+    bool activar();
 
     bool desactivar();
     //desactiva un servidor en estado ACTIVO o MANTENIMIENTO. Si el servidor ya estaba desactivado, el
@@ -78,18 +71,8 @@ public:
     //jugadores conectados como la cola de aquellos que están esperando poder conectarse.
 
     bool ponerEnMantenimiento();
-    //pone un servidor en MANTENIMIENTO. Sólo es posible pasar al estado MANTENIMIENTO para aquellos
-    //servidores que están INACTIVOS. El método devolverá true en caso de poder poner al servidor en
-    //MANTENIMIENTO; false en caso contrario, esto es, cuando el servidor está previamente ACTIVO, o bien
-    //ya está en MANTENIMIENTO.
 
     void mostrarInformacion();
-    //muestra por pantalla información de interés del servidor. En concreto, muestra la dirección y el
-    //identificador del servidor, su estado, la relación entre el máximo de jugadores que puede alojar y
-    //el número real de jugadores conectados. También mostrará el número máximo de jugadores que pueden
-    //estar esperando acceso, junto con el número de elementos tipo Jugador encolados en jugadoresEnEspera
-    //con dicho propósito. Finalmente, también mostrará el puerto de escucha del servidor y la latencia
-    //media de los jugadores conectados, y la localización geográfica del servidor (país).
 
     bool expulsarJugador(cadena nombre);
     //expulsa el jugador cuyo nombreJugador coincide con el parámetro nombre de la lista de conectados,
@@ -101,25 +84,18 @@ public:
     //al servidor, pasando a la lista de conectados.
 
     void getNombreJuego(cadena nJ);
-    //devuelve el valor del atributo nombreJuego a través del parámetro de entrada/salida nJ.
 
     int getPuerto();
-    //devuelve el valor del atributo puerto.
 
     void getLocalizacionGeografica(cadena lG);
-    //devuelve el valor del atributo localizacionGeografica a través del parámetro de entrada/salida lG.
 
     int getMaxJugadoresConectados();
-    //devuelve el valor del atributo maxJugadoresConectados.
 
     int getMaxJugadoresEnEspera();
-    //devuelve el valor del atributo maxJugadoresEnEspera.
 
     int getNumJugadoresConectados();
-    //devuelve el número de jugadores conectados al servidor.
 
     int getNumJugadoresEnEspera();
-    //devuelve el número de jugadores en la cola de espera de acceso al servidor.
 
     void exportarJugadoresConectados(Jugador *conectados);
     //el método copiara todos los jugadores alojados en el servidor en el vector dinámico accesible desde

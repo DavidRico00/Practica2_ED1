@@ -5,6 +5,8 @@
 #define CLS system("cls");
 
 #include <iostream>
+#include <cstring>
+#include <iomanip>
 using namespace std;
 
 typedef char cadena[50];

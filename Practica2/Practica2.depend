@@ -17,13 +17,14 @@
 1745937303 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\gestorservidores.h
 	"Servidor.h"
 
-1745944390 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\servidor.h
-	"Comun.h"
+1745946907 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\servidor.h
 	"Lista.h"
 	"Cola.h"
 
-1745936330 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\comun.h
+1745946621 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\comun.h
 	<iostream>
+	<cstring>
+	<iomanip>
 
 1745934982 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\src\servidor.cpp
 	"Servidor.h"

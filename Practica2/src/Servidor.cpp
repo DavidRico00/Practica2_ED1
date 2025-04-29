@@ -7,27 +7,33 @@ Servidor::~Servidor()
 
 Servidor::Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG)
 {
-
+    strcpy(direccionServidor, dS);
+    strcpy(nombreJuego, nJ);
+    id = i;
+    maxJugadoresConectados = mxC;
+    maxJugadoresEnEspera = mxE;
+    puerto = p;
+    strcpy(localizacionGeografica, lG);
 }
 
 int Servidor::getId()
 {
-    return 0;
+    return id;
 }
 
 void Servidor::getDireccionServidor(cadena dS)
 {
-
+    strcpy(dS, direccionServidor);
 }
 
 void Servidor::setSiguienteServidor(Servidor *pS)
 {
-
+    siguienteServidor = pS;
 }
 
 Servidor* Servidor::getSiguienteServidor()
 {
-    return nullptr;
+    return siguienteServidor;
 }
 
 bool Servidor::conectarJugador(Jugador j)
@@ -42,22 +48,37 @@ bool Servidor::ponerJugadorEnEspera(Jugador j)
 
 void Servidor::mostrarJugadoresConectados()
 {
+    int l = jugadoresConectados.longitud();
 
+    for(int i=1; i<=l; i++)
+        mostrarJugadoresFormateado(jugadoresConectados.observar(i));
 }
 
 void Servidor::mostrarJugadoresEnEspera()
 {
+    int l = jugadoresEnEspera.longitud();
 
+    for(int i=0; i<l; i++)
+    {
+        mostrarJugadoresFormateado(jugadoresEnEspera.primero())
+        jugadoresEnEspera.encolar(jugadoresEnEspera.desencolar());
+    }
 }
 
 bool Servidor::estaActivo()
 {
-    return false;
+    return (strcmp(estado, ACTIVO) == 0);
 }
 
 bool Servidor::activar()
 {
-    return false;
+    if(estaActivo())
+        return false;
+    else
+    {
+        strcpy(estado, ACTIVO);
+        return true;
+    }
 }
 
 bool Servidor::desactivar()
@@ -67,11 +88,32 @@ bool Servidor::desactivar()
 
 bool Servidor::ponerEnMantenimiento()
 {
+    if(strcmp(estado, INACTIVO)==0)
+    {
+        strcpy(estado, MANTENIMIENTO);
+        return true;
+    }
     return false;
 }
 
 void Servidor::mostrarInformacion()
 {
+    cout<<"\nInformacion del servidor"<<endl;
+    cout<<"----------------------------"<<endl;
+    cout<<"IP/hostname: "<<direccionServidor<<endl;
+    cout<<"ID: "<<id<<endl;
+    cout<<"Estado: "<<estado<<endl;
+    cout<<"Num Jugadores Disponibles: "<<(maxJugadoresConectados-jugadoresConectados.longitud())<<endl;
+    cout<<"Num Jugadores Maximo en Espera: "<<maxJugadoresEnEspera<<endl;
+    cout<<"Num Jugadores en Espera: "<<jugadoresEnEspera.longitud()<<endl;
+    cout<<"Puerto: "<<puerto<<endl;
+    cout<<"Localizacion Geografica: "<<localizacionGeografica<<endl;
+
+    int l = jugadoresConectados.longitud(), latenciaMedia=0;
+    for(int i = 1; i <= l; i++)
+        latenciaMedia += jugadoresConectados.observar(i).latencia;
+
+    cout<<"Latencia media: "<<latenciaMedia<<endl;
 }
 
 bool Servidor::expulsarJugador(cadena nombre)
@@ -81,37 +123,37 @@ bool Servidor::expulsarJugador(cadena nombre)
 
 void Servidor::getNombreJuego(cadena nJ)
 {
-
+    strcpy(nJ, nombreJuego);
 }
 
 int Servidor::getPuerto()
 {
-    return 0;
+    return puerto;
 }
 
 void Servidor::getLocalizacionGeografica(cadena lG)
 {
-
+    strcpy(lG, localizacionGeografica);
 }
 
 int Servidor::getMaxJugadoresConectados()
 {
-    return 0;
+    return maxJugadoresConectados;
 }
 
 int Servidor::getMaxJugadoresEnEspera()
 {
-    return 0;
+    return maxJugadoresEnEspera;
 }
 
 int Servidor::getNumJugadoresConectados()
 {
-    return 0;
+    return jugadoresConectados.longitud();
 }
 
 int Servidor::getNumJugadoresEnEspera()
 {
-    return 0;
+    return jugadoresEnEspera.longitud();
 }
 
 void Servidor::exportarJugadoresConectados(Jugador *conectados)
@@ -123,3 +165,28 @@ void Servidor::exportarJugadoresEnEspera(Jugador *enEspera)
 {
 
 }
+
+
+void Servidor::mostrarJugadoresFormateado(Jugador j, bool cabecera)
+{
+    if(cabecera)
+    {
+        cout << endl;
+        cout << setw(20) << left << "Nombre"
+             << setw(5) << left << "ID"
+             << setw(10) << left << "Activo"
+             << setw(12) << left << "Latencia"
+             << setw(15) << left << "Puntuación"
+             << setw(20) << left << "País" << endl;
+
+        cout << string(87, '-') << endl;
+    }
+
+    cout << setw(20) << left << j.nombreJugador
+         << setw(5) << left << j.ID
+         << setw(10) << left << (j.activo ? "True" : "False")
+         << setw(12) << left << j.latencia
+         << setw(15) << left << j.puntuacion
+         << setw(20) << left << j.pais << endl;
+}
+
