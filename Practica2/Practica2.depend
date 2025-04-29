@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1745936518 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\src\cola.cpp
+	"Cola.h"
+
+1745936495 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\cola.h
+	"Comun.h"
+
+1745936694 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\src\lista.cpp
+	"Lista.h"
+
+1745936622 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\lista.h
+	"Comun.h"
+
+1745934838 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\src\gestorservidores.cpp
+	"GestorServidores.h"
+
+1745936055 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\gestorservidores.h
+	"Servidor.h"
+
+1745935013 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\servidor.h
+	"Comun.h"
+	"Lista.h"
+	"Cola.h"
+
+1745936330 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\comun.h
+	<iostream>
+
+1745934982 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\src\servidor.cpp
+	"Servidor.h"
+
+1745936577 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\main.cpp
+	"GestorServidores.h"
+
