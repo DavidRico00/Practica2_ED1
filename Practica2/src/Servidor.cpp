@@ -5,7 +5,7 @@ Servidor::~Servidor()
 
 }
 
-Servidor::Servidor(cadena dS, cadena nJ, int i, int mxL, int mxC, int p, cadena lG)
+Servidor::Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG)
 {
 
 }

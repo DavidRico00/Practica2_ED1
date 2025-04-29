@@ -3,7 +3,8 @@
 
 #include "Comun.h"
 
-struct TNodo_Cola   {
+struct TNodo_Cola
+{
    Jugador Datos;           //Datos a almacenar en cada nodo
    TNodo_Cola *Siguiente;   //Puntero al siguiente nodo
 };
@@ -14,6 +15,7 @@ private:
     TNodo_Cola *Inicio; //Puntero al inicio de la cola.
     TNodo_Cola *Fin;    //Puntero al fin de la cola.
     int ne;             //nº de nodos que tiene la lista
+
 public:
     Cola();
     ~Cola();

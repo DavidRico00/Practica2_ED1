@@ -12,8 +12,7 @@ class Servidor{
                                     identificar de forma unívoca cada servidor que ésta gestiona.*/
     Servidor *siguienteServidor;    //puntero al siguiente servidor del sistema.
     int maxJugadoresConectados;     //número máximo de jugadores que pueden ser alojados en el servidor.
-    int maxJugadoresEnEspera;       /*número máximo de jugadores que pueden estar en espera para acceder al
-                                    servidor.*/
+    int maxJugadoresEnEspera;       //número máximo de jugadores que pueden estar en espera para acceder al servidor.
     Lista jugadoresConectados;      /*lista de jugadores alojados en el servidor. Los jugadores aparecen
                                     ordenados en la lista según su puntuación, y de forma ascendente en
                                     relación al valor de ésta.*/
@@ -26,7 +25,7 @@ class Servidor{
 public:
     ~Servidor();
 
-    Servidor(cadena dS, cadena nJ, int i, int mxL, int mxC, int p, cadena lG);
+    Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG);
     //método constructor que inicializa los atributos direccionServidor, nombreJuego, id,
     //maxJugadoresConectados, maxJugadoresEnEspera, puerto y localizacionGeografica con,
     //respectivamente, dS, nJ, i, mxL, mxC, p y lG. Además, inicializa el atributo estado a “INACTIVO”.

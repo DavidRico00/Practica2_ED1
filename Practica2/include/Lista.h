@@ -17,21 +17,20 @@ private:
 
     TNodo_Lista *Anterior(int i);   /* Devuelve un puntero al elemento anterior al elemento i
                                     Devuelve NULL si es el primero */
-
 public:
     Lista();
     Lista(Jugador e);
     ~Lista();
     bool esvacia();
     int longitud();
-    void anadirIzq(Jugador e);          //
-    void anadirDch(Jugador e);          //
-    void eliminarIzq();                 //
-    void eliminarDch();                 //      FALTA
-    Jugador observarIzq();              //
-    Jugador observarDch();              //
-    void concatenar(Lista l);           //
-    bool pertenece(Jugador e);          //
+    void anadirIzq(Jugador e);          // +
+    void anadirDch(Jugador e);          // +
+    void eliminarIzq();                 // +
+    void eliminarDch();                 // +     FALTA
+    Jugador observarIzq();              // +
+    Jugador observarDch();              // +
+    void concatenar(Lista l);           // +
+    bool pertenece(Jugador e);          // +
     void insertar(int i, Jugador e);
     void eliminar(int i);
     void modificar(int i, Jugador e);
