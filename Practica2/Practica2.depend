@@ -17,7 +17,7 @@
 1745937303 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\gestorservidores.h
 	"Servidor.h"
 
-1745946907 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\servidor.h
+1745947504 c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\include\servidor.h
 	"Lista.h"
 	"Cola.h"
 
@@ -26,9 +26,9 @@
 	<cstring>
 	<iomanip>
 
-1745934982 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\src\servidor.cpp
+1746020053 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\src\servidor.cpp
 	"Servidor.h"
 
-1745937170 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\main.cpp
+1746020410 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\main.cpp
 	"GestorServidores.h"
 

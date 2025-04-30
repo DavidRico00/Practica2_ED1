@@ -14,6 +14,7 @@ Servidor::Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena 
     maxJugadoresEnEspera = mxE;
     puerto = p;
     strcpy(localizacionGeografica, lG);
+    estado = INACTIVO;
 }
 
 int Servidor::getId()
@@ -51,7 +52,7 @@ void Servidor::mostrarJugadoresConectados()
     int l = jugadoresConectados.longitud();
 
     for(int i=1; i<=l; i++)
-        mostrarJugadoresFormateado(jugadoresConectados.observar(i));
+        mostrarJugadoresFormateado(jugadoresConectados.observar(i), i==1);
 }
 
 void Servidor::mostrarJugadoresEnEspera()
@@ -60,8 +61,9 @@ void Servidor::mostrarJugadoresEnEspera()
 
     for(int i=0; i<l; i++)
     {
-        mostrarJugadoresFormateado(jugadoresEnEspera.primero())
-        jugadoresEnEspera.encolar(jugadoresEnEspera.desencolar());
+        mostrarJugadoresFormateado(jugadoresEnEspera.primero(), i==0);
+        jugadoresEnEspera.encolar(jugadoresEnEspera.primero());
+        jugadoresEnEspera.desencolar();
     }
 }
 
@@ -112,6 +114,7 @@ void Servidor::mostrarInformacion()
     int l = jugadoresConectados.longitud(), latenciaMedia=0;
     for(int i = 1; i <= l; i++)
         latenciaMedia += jugadoresConectados.observar(i).latencia;
+    latenciaMedia /= l;
 
     cout<<"Latencia media: "<<latenciaMedia<<endl;
 }

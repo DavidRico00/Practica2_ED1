@@ -19,10 +19,12 @@ int menu()
             PAUSE;
         }
     }
-    while(opcion<1 || opcion>4);
+    while(opcion<1 || opcion>9);
 
     return opcion;
 }
+
+
 
 int main()
 {
@@ -77,6 +79,7 @@ int main()
 
         }//fin switch
 
+        PAUSE;
     }
     while(opc != 9);
 
