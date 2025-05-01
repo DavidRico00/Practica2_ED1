@@ -2,7 +2,8 @@
 
 Servidor::~Servidor()
 {
-
+    if(siguienteServidor!=NULL)
+        delete siguienteServidor;
 }
 
 Servidor::Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG)
@@ -15,6 +16,7 @@ Servidor::Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena 
     puerto = p;
     strcpy(localizacionGeografica, lG);
     strcpy(estado, INACTIVO);
+    siguienteServidor=NULL;
 }
 
 int Servidor::getId()
@@ -29,7 +31,8 @@ void Servidor::getDireccionServidor(cadena dS)
 
 void Servidor::setSiguienteServidor(Servidor *pS)
 {
-    siguienteServidor = pS;
+    if(siguienteServidor==NULL)
+        siguienteServidor = pS;
 }
 
 Servidor* Servidor::getSiguienteServidor()
@@ -39,12 +42,31 @@ Servidor* Servidor::getSiguienteServidor()
 
 bool Servidor::conectarJugador(Jugador j)
 {
-    return false;
+    int longitud = jugadoresConectados.longitud();
+
+    if(longitud >= maxJugadoresConectados)
+        return false;
+
+    int pos=1;
+
+    while(pos<=longitud && jugadoresConectados.observar(pos).puntuacion < j.puntuacion)
+        pos++;
+
+    jugadoresConectados.insertar(pos, j);
+
+    return true;
 }
 
 bool Servidor::ponerJugadorEnEspera(Jugador j)
 {
-    return false;
+    if(jugadoresConectados.longitud() == maxJugadoresConectados &&
+       jugadoresEnEspera.longitud() < maxJugadoresEnEspera)
+    {
+        jugadoresEnEspera.encolar(j);
+        return true;
+    }
+    else
+        return false;
 }
 
 void Servidor::mostrarJugadoresConectados()
@@ -85,7 +107,20 @@ bool Servidor::activar()
 
 bool Servidor::desactivar()
 {
-    return false;
+    if(strcmp(estado, INACTIVO)==0)
+        return false;
+
+    if(strcmp(estado, ACTIVO)==0)
+    {
+        while(!jugadoresConectados.esvacia())
+            jugadoresConectados.eliminar(1);
+
+        while(!jugadoresEnEspera.esvacia())
+            jugadoresEnEspera.desencolar();
+    }
+
+    strcpy(estado, INACTIVO);
+    return true;
 }
 
 bool Servidor::ponerEnMantenimiento()
@@ -121,7 +156,50 @@ void Servidor::mostrarInformacion()
 
 bool Servidor::expulsarJugador(cadena nombre)
 {
-    return false;
+    if(!estaActivo())
+        return false;
+
+    bool expulsado=false;
+
+    Jugador j, aux;
+    strcpy(j.nombreJugador, nombre);
+
+    int pos = jugadoresConectados.posicion(j);
+
+    if(pos != -1)
+    {
+        jugadoresConectados.eliminar(pos);
+
+        if(!jugadoresEnEspera.esvacia())
+        {
+            conectarJugador(jugadoresEnEspera.primero());
+            jugadoresEnEspera.desencolar();
+        }
+
+        expulsado=true;
+    }
+    else
+    {
+        int longitud = jugadoresEnEspera.longitud(), i=0;
+
+        while(!expulsado && i<longitud)
+        {
+            aux = jugadoresEnEspera.primero();
+            if(strcmp(nombre, aux.nombreJugador)==0)
+            {
+                jugadoresEnEspera.desencolar();
+                expulsado=true;
+            }
+            else
+            {
+                jugadoresEnEspera.encolar(aux);
+                jugadoresEnEspera.desencolar();
+                i++;
+            }
+        }
+    }
+
+    return expulsado;
 }
 
 void Servidor::getNombreJuego(cadena nJ)
@@ -161,12 +239,34 @@ int Servidor::getNumJugadoresEnEspera()
 
 void Servidor::exportarJugadoresConectados(Jugador *conectados)
 {
+    if(conectados==NULL)
+        cout<<"El puntero pasado no esta inicializado"<<endl;
+    else
+    {
+        int longitud = jugadoresConectados.longitud();
 
+        for(int i=0; i<longitud; i++)
+            conectados[i]=jugadoresConectados.observar(i+1);
+    }
 }
 
 void Servidor::exportarJugadoresEnEspera(Jugador *enEspera)
 {
+    if(enEspera==NULL)
+        cout<<"El puntero pasado no esta inicializado"<<endl;
+    else
+    {
+        int longitud = jugadoresEnEspera.longitud();
 
+        for(int i=0; i<longitud; i++)
+        {
+            Jugador aux = jugadoresEnEspera.primero();
+
+            enEspera[i]= aux;
+            jugadoresEnEspera.encolar(aux);
+            jugadoresEnEspera.desencolar();
+        }
+    }
 }
 
 

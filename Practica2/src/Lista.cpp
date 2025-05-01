@@ -220,7 +220,7 @@ int Lista::posicion(Jugador e)
     bool encontrado=false;
     int v=1;
     while (Nodo_Aux!=NULL && !encontrado)
-        if (Nodo_Aux->Datos.ID!=e.ID)
+        if (strcmp(Nodo_Aux->Datos.nombreJugador, e.nombreJugador)!=0)
         {
             Nodo_Aux=Nodo_Aux->Siguiente;
             v++;
