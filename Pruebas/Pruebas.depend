@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1746092378 source:c:\users\user\onedrive\escritorio\practica2_ed1\pruebas\main.cpp
+	<iostream>
+	"TADLista_C_NES.h"
+
+1746091646 source:c:\users\user\onedrive\escritorio\practica2_ed1\pruebas\src\tadlista_c_nes.cpp
+	"TADLista_C_NES.h"
+
+1746043191 c:\users\user\onedrive\escritorio\practica2_ed1\pruebas\include\tadlista_c_nes.h
+	<iostream>
+

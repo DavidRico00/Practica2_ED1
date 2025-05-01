@@ -24,8 +24,6 @@ int menu()
     return opcion;
 }
 
-
-
 int main()
 {
     int opc;
@@ -79,6 +77,7 @@ int main()
 
         }//fin switch
 
+        cout<<endl;
         PAUSE;
     }
     while(opc != 9);

@@ -32,3 +32,36 @@
 1746020410 source:c:\users\user\onedrive\escritorio\estructura de datos 1\practica2_ed1\practica2\main.cpp
 	"GestorServidores.h"
 
+1746025246 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\cola.cpp
+	"Cola.h"
+
+1746025246 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\cola.h
+	"Comun.h"
+
+1746025246 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\comun.h
+	<iostream>
+	<cstring>
+	<iomanip>
+
+1746025246 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\gestorservidores.cpp
+	"GestorServidores.h"
+
+1746025246 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\gestorservidores.h
+	"Servidor.h"
+
+1746025246 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\servidor.h
+	"Lista.h"
+	"Cola.h"
+
+1746025246 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\lista.h
+	"Comun.h"
+
+1746025246 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\lista.cpp
+	"Lista.h"
+
+1746025482 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\servidor.cpp
+	"Servidor.h"
+
+1746025328 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\main.cpp
+	"GestorServidores.h"
+

@@ -14,7 +14,7 @@ Servidor::Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena 
     maxJugadoresEnEspera = mxE;
     puerto = p;
     strcpy(localizacionGeografica, lG);
-    estado = INACTIVO;
+    strcpy(estado, INACTIVO);
 }
 
 int Servidor::getId()

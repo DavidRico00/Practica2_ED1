@@ -2,16 +2,26 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+<<<<<<< Updated upstream
 	<File name="src\GestorServidores.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1010" topLine="60" />
 		</Cursor>
 	</File>
 	<File name="include\Lista.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+=======
+	<File name="include\Lista.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="0" topLine="20" />
 		</Cursor>
 	</File>
+	<File name="include\GestorServidores.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+>>>>>>> Stashed changes
+		<Cursor>
+			<Cursor1 position="0" topLine="20" />
+		</Cursor>
+	</File>
+<<<<<<< Updated upstream
 	<File name="include\Comun.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="157" topLine="4" />
@@ -21,10 +31,41 @@
 		<Cursor>
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
-	</File>
-	<File name="src\Lista.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+=======
+	<File name="include\Cola.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2625" topLine="57" />
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Servidor.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="380" topLine="5" />
+		</Cursor>
+		<Folding>
+			<Collapse line="20" />
+			<Collapse line="25" />
+			<Collapse line="30" />
+			<Collapse line="35" />
+			<Collapse line="50" />
+			<Collapse line="58" />
+			<Collapse line="70" />
+			<Collapse line="75" />
+			<Collapse line="91" />
+			<Collapse line="101" />
+			<Collapse line="127" />
+			<Collapse line="132" />
+			<Collapse line="137" />
+			<Collapse line="142" />
+			<Collapse line="147" />
+			<Collapse line="152" />
+			<Collapse line="157" />
+			<Collapse line="173" />
+		</Folding>
+>>>>>>> Stashed changes
+	</File>
+	<File name="src\Lista.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3788" topLine="57" />
 		</Cursor>
 		<Folding>
 			<Collapse line="3" />
@@ -47,6 +88,7 @@
 			<Collapse line="217" />
 		</Folding>
 	</File>
+<<<<<<< Updated upstream
 	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="904" topLine="0" />
@@ -58,29 +100,27 @@
 	<File name="src\Servidor.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="373" topLine="0" />
+=======
+	<File name="include\Comun.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="157" topLine="4" />
+		</Cursor>
+	</File>
+	<File name="src\GestorServidores.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1010" topLine="60" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1296" topLine="34" />
+>>>>>>> Stashed changes
 		</Cursor>
 		<Folding>
-			<Collapse line="8" />
-			<Collapse line="20" />
-			<Collapse line="25" />
-			<Collapse line="30" />
-			<Collapse line="35" />
-			<Collapse line="50" />
-			<Collapse line="58" />
-			<Collapse line="70" />
-			<Collapse line="75" />
-			<Collapse line="91" />
-			<Collapse line="101" />
-			<Collapse line="127" />
-			<Collapse line="132" />
-			<Collapse line="137" />
-			<Collapse line="142" />
-			<Collapse line="147" />
-			<Collapse line="152" />
-			<Collapse line="157" />
-			<Collapse line="173" />
+			<Collapse line="3" />
 		</Folding>
 	</File>
+<<<<<<< Updated upstream
 	<File name="include\Servidor.h" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="115" topLine="0" />
@@ -89,6 +129,11 @@
 	<File name="include\GestorServidores.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="79" topLine="0" />
+=======
+	<File name="include\Servidor.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="115" topLine="18" />
+>>>>>>> Stashed changes
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
