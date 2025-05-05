@@ -2,12 +2,13 @@
 #define LISTA_H
 
 #include "Comun.h"
+#include "TADLista_C_NED.h"
 
-struct TNodo_Lista
+/*struct TNodo_Lista
 {
   Jugador Datos;            // Dato a almacenar en cada nodo
   TNodo_Lista *Siguiente;   // Puntero al siguiente nodo
-};
+};*/
 
 class Lista
 {

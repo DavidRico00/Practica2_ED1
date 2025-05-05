@@ -5,16 +5,16 @@
 
 struct TNodo_Cola
 {
-   Jugador Datos;           //Datos a almacenar en cada nodo
-   TNodo_Cola *Siguiente;   //Puntero al siguiente nodo
+   Jugador Datos;
+   TNodo_Cola *Siguiente;
 };
 
 class Cola
 {
 private:
-    TNodo_Cola *Inicio; //Puntero al inicio de la cola.
-    TNodo_Cola *Fin;    //Puntero al fin de la cola.
-    int ne;             //nº de nodos que tiene la lista
+    TNodo_Cola *Inicio;
+    TNodo_Cola *Fin;
+    int ne;
 
 public:
     Cola();

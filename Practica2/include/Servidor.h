@@ -1,7 +1,7 @@
 #ifndef SERVIDOR_H
 #define SERVIDOR_H
 
-#include "Lista.h"
+#include "TADLista_C_NED.h"
 #include "Cola.h"
 
 #define ACTIVO        "ACTIVO"

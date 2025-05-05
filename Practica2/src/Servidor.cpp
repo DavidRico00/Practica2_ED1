@@ -2,8 +2,7 @@
 
 Servidor::~Servidor()
 {
-    if(siguienteServidor!=NULL)
-        delete siguienteServidor;
+
 }
 
 Servidor::Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG)
@@ -31,8 +30,7 @@ void Servidor::getDireccionServidor(cadena dS)
 
 void Servidor::setSiguienteServidor(Servidor *pS)
 {
-    if(siguienteServidor==NULL)
-        siguienteServidor = pS;
+    siguienteServidor = pS;
 }
 
 Servidor* Servidor::getSiguienteServidor()
@@ -149,7 +147,9 @@ void Servidor::mostrarInformacion()
     int l = jugadoresConectados.longitud(), latenciaMedia=0;
     for(int i = 1; i <= l; i++)
         latenciaMedia += jugadoresConectados.observar(i).latencia;
-    latenciaMedia /= l;
+
+    if(l>0)
+        latenciaMedia = latenciaMedia/l;
 
     cout<<"Latencia media: "<<latenciaMedia<<endl;
 }
@@ -187,15 +187,14 @@ bool Servidor::expulsarJugador(cadena nombre)
             aux = jugadoresEnEspera.primero();
             if(strcmp(nombre, aux.nombreJugador)==0)
             {
-                jugadoresEnEspera.desencolar();
                 expulsado=true;
             }
             else
             {
                 jugadoresEnEspera.encolar(aux);
-                jugadoresEnEspera.desencolar();
                 i++;
             }
+            jugadoresEnEspera.desencolar();
         }
     }
 

@@ -37,13 +37,13 @@
 		<Unit filename="include/Cola.h" />
 		<Unit filename="include/Comun.h" />
 		<Unit filename="include/GestorServidores.h" />
-		<Unit filename="include/Lista.h" />
 		<Unit filename="include/Servidor.h" />
+		<Unit filename="include/TADLista_C_NED.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Cola.cpp" />
 		<Unit filename="src/GestorServidores.cpp" />
-		<Unit filename="src/Lista.cpp" />
 		<Unit filename="src/Servidor.cpp" />
+		<Unit filename="src/TADLista_C_NED.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
