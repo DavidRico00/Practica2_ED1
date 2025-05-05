@@ -45,12 +45,15 @@ bool Servidor::conectarJugador(Jugador j)
     if(longitud >= maxJugadoresConectados)
         return false;
 
-    int pos=1;
+    int i=1, pos=jugadoresConectados.posicion(j);
 
-    while(pos<=longitud && jugadoresConectados.observar(pos).puntuacion < j.puntuacion)
-        pos++;
+    if(pos!=-1)
+        return false;
 
-    jugadoresConectados.insertar(pos, j);
+    while(i<=longitud && jugadoresConectados.observar(i).puntuacion < j.puntuacion)
+        i++;
+
+    jugadoresConectados.insertar(i, j);
 
     return true;
 }

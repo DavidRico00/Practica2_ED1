@@ -12,17 +12,10 @@ class GestorServidores{
 
 public:
     GestorServidores();
-    //método constructor que inicializará convenientemente los atributos de la clase a los valores por
-    //defecto convenidos.
-
     ~GestorServidores();
-    //método destructor que liberará la memoria reservada para los artefactos dinámicos que integran
-    //la estructura de nodos enlazados correspondiente al conjunto de servidores.
-
     int getNumServidores();
-    //devuelve el valor del atributo numServidores.
 
-    bool desplegarServidor(cadena dS, cadena nJ, int i, int mxL, int mxC, int p, cadena lG);
+    bool desplegarServidor(cadena dS, cadena nJ, int i, int mxC int mxE, int p, cadena lG);
     //desplegará un nuevo servidor de juego en el sistema. Para ello, creará un objeto de la clase
     //Servidor, cuya dirección/hostname será dS, el juego ejecutado nJ, su identificador i, el máximo de
     //jugadores que puede alojar será mxL, y el máximo de jugadores que pueden estar en espera de conexión
