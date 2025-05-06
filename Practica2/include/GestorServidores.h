@@ -5,30 +5,16 @@
 
 class GestorServidores{
 
-    Servidor *primerServidor;   /* puntero al primer elemento/servidor dentro de la estructura de nodos
-                                enlazados objetos de la clase Servidor, representativa del conjunto de servidores utilizados
-                                para gestionar las partidas multijugador online de los distintos juegos de la compañía */
-    int numServidores;          //número de servidores de juego desplegados gobernados por el gestor.
+    Servidor *primerServidor;
+    int numServidores;
 
 public:
     GestorServidores();
     ~GestorServidores();
     int getNumServidores();
+    bool desplegarServidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG);
 
-    bool desplegarServidor(cadena dS, cadena nJ, int i, int mxC int mxE, int p, cadena lG);
-    //desplegará un nuevo servidor de juego en el sistema. Para ello, creará un objeto de la clase
-    //Servidor, cuya dirección/hostname será dS, el juego ejecutado nJ, su identificador i, el máximo de
-    //jugadores que puede alojar será mxL, y el máximo de jugadores que pueden estar en espera de conexión
-    //mxC; su puerto de escucha será p, y el nombre del país en donde está físicamente instalado lG.
-    //Este nuevo objeto será integrado en la estructura del nodos, y su estado por defecto será INACTIVO.
-    //Estos nodos están ordenados por orden alfabético ascendente según el nombre del país en el que cada
-    //servidor está ubicado (atributo localizacionGeografica). El nuevo nodo será añadido en dicha
-    //estructura respetando este requisito. El método devolverá true si el despliegue del nuevo nodo es
-    //completado con éxito; false en caso contrario, bien porque no haya sido posible reservar memoria
-    //para crear el nuevo objeto, o bien porque ya existiese en la estructura de nodos otro Servidor con
-    //el mismo nombre, o bien el mismo identificador que el nuevo elemento a integrar en la estructura.
-
-    bool desconetarServidor(cadena dS);
+    bool desconectarServidor(cadena dS);
     //el método intentará desconectar (poner en estado INACTIVO) el servidor cuya dirección/hostname
     //coincide con el valor indicado en el parámetro de entrada dS. Si el servidor a desactivar estaba
     //ACTIVO, será necesario expulsar a los jugadores que estaban en espera, y redirigir a los que estaban
@@ -108,20 +94,9 @@ public:
     //mismo.
 
     bool jugadorConectado(cadena nJ, cadena dS);
-    //el método devolverá true si el jugador con nombre nJ está conectado al servidor con
-    //dirección/hostname dS; false en caso contrario.
-
     bool jugadorEnEspera(cadena nJ, cadena dS);
-    //el método devolverá true si el jugador con nombre nJ está en la cola de espera del servidor con
-    //dirección/hostname dS; false en caso contrario.
-
     bool jugadorConectado(cadena nJ);
-    //el método devolverá true si el jugador con nombre nJ está conectado a alguno de los servidores
-    //activos del sistema.
-
     bool jugadorEnEspera(cadena nJ);
-    //el método devolverá true si el jugador con nombre nJ está en la cola de espera de alguno de los
-    //servidores activos del sistema.
 };
 
 #endif // GESTORSERVIDORES_H

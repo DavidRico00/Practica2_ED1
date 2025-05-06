@@ -13,7 +13,7 @@ GestorServidores::~GestorServidores()
         while(primerServidor->getSiguienteServidor() != NULL)
         {
             Servidor *aux = primerServidor->getSiguienteServidor();
-            primerServidor->setSiguienteServidor(aux->Siguiente);
+            primerServidor->setSiguienteServidor(aux->getSiguienteServidor());
             delete aux;
         }
 
@@ -30,19 +30,61 @@ int GestorServidores::getNumServidores()
 
 bool GestorServidores::desplegarServidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG)
 {
-    //Estos nodos están ordenados por orden alfabético ascendente según el nombre del país en el que cada
-    //servidor está ubicado (atributo localizacionGeografica). El nuevo nodo será añadido en dicha
-    //estructura respetando este requisito. El método devolverá true si el despliegue del nuevo nodo es
-    //completado con éxito; false en caso contrario, bien porque no haya sido posible reservar memoria
-    //para crear el nuevo objeto, o bien porque ya existiese en la estructura de nodos otro Servidor con
-    //el mismo nombre, o bien el mismo identificador que el nuevo elemento a integrar en la estructura
+    Servidor *servidor = new Servidor(dS, nJ, i, mxC, mxE, p, lG);
 
-    return false;
+    if(servidor == NULL)
+        return false;
 
+    bool insertado=false;
 
+    if(numServidores==0)
+    {
+        primerServidor=servidor;
+        insertado=true;
+    }
+    else
+    {
+        Servidor *aux=primerServidor;
+        cadena direccionServer, localizacion;
+        bool igual=false;
+        int pos=-1, iterador=1;
+
+        while(aux!=NULL && !igual)
+        {
+            aux->getDireccionServidor(direccionServer);
+            aux->getLocalizacionGeografica(localizacion);
+            if(aux->getId()==i || (strcmp(direccionServer, dS)==0))
+                igual=true;
+
+            if(pos==-1 && (strcmp(lG, localizacion) < 0))
+                pos=iterador;
+
+            aux=aux->getSiguienteServidor();
+            iterador++;
+        }
+
+        if(!igual)
+        {
+            if(pos==-1)
+                pos=numServidores;
+
+            aux=primerServidor;
+            for(int j=1; j<pos; j++)
+                aux=aux->getSiguienteServidor();
+
+            servidor->setSiguienteServidor(aux->getSiguienteServidor());
+            aux->setSiguienteServidor(servidor);
+
+            insertado=true;
+        }
+    }
+
+    if(insertado)
+        numServidores++;
+    return insertado;
 }
 
-bool GestorServidores::desconetarServidor(cadena dS)
+bool GestorServidores::desconectarServidor(cadena dS)
 {
     return false;
 }
@@ -79,25 +121,86 @@ int GestorServidores::getPosicionServidor(cadena dS)
 
 void GestorServidores::mostrarInformacionServidores(int pos)
 {
+    if((pos<1 && pos!=-1) || pos>numServidores)
+    {
+        cout<<"\nLa posicion no es valida"<<endl;
+        return;
+    }
 
+    Servidor *servidor=primerServidor;
+    for(int i=1; i<=numServidores; i++)
+    {
+        if(pos==-1 || (pos!=-1 && pos==i))
+        {
+            servidor->mostrarInformacion();
+            if(servidor->estaActivo())
+            {
+                servidor->mostrarJugadoresConectados();
+                servidor->mostrarInformacion();
+            }
+
+            servidor=servidor->getSiguienteServidor();
+        }
+    }
 }
 
 bool GestorServidores::jugadorConectado(cadena nJ, cadena dS)
 {
+    cadena direccion;
+    Servidor *servidor=primerServidor;
+
+    while(servidor!=NULL)
+    {
+        servidor->getDireccionServidor(direccion);
+        if(strcmp(dS, direccion)==0)
+            return servidor->existeJugadorEnConectados(nJ);
+        servidor=servidor->getSiguienteServidor();
+    }
+
     return false;
 }
 
 bool GestorServidores::jugadorEnEspera(cadena nJ, cadena dS)
 {
+    cadena direccion;
+    Servidor *servidor=primerServidor;
+
+    while(servidor!=NULL)
+    {
+        servidor->getDireccionServidor(direccion);
+        if(strcmp(dS, direccion)==0)
+            return servidor->existeJugadorEnEspera(nJ);
+        servidor=servidor->getSiguienteServidor();
+    }
+
     return false;
 }
 
 bool GestorServidores::jugadorConectado(cadena nJ)
 {
-    return false;
+    Servidor *servidor=primerServidor;
+    bool encontrado=false;
+
+    while(servidor!=NULL && !encontrado)
+    {
+        encontrado = servidor->existeJugadorEnConectados(nJ);
+        servidor=servidor->getSiguienteServidor();
+    }
+
+    return encontrado;
 }
 
 bool GestorServidores::jugadorEnEspera(cadena nJ)
 {
-    return false;
+    Servidor *servidor=primerServidor;
+    bool encontrado=false;
+
+    while(servidor!=NULL && !encontrado)
+    {
+        encontrado = servidor->existeJugadorEnEspera(nJ);
+        servidor=servidor->getSiguienteServidor();
+    }
+
+    return encontrado;
 }
+

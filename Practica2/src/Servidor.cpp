@@ -75,7 +75,7 @@ void Servidor::mostrarJugadoresConectados()
     int l = jugadoresConectados.longitud();
 
     for(int i=1; i<=l; i++)
-        mostrarJugadoresFormateado(jugadoresConectados.observar(i), i==1);
+        mostrarJugadoresFormateado(jugadoresConectados.observar(i), i==1, "JUGADORES CONECTADOS");
 }
 
 void Servidor::mostrarJugadoresEnEspera()
@@ -84,7 +84,7 @@ void Servidor::mostrarJugadoresEnEspera()
 
     for(int i=0; i<l; i++)
     {
-        mostrarJugadoresFormateado(jugadoresEnEspera.primero(), i==0);
+        mostrarJugadoresFormateado(jugadoresEnEspera.primero(), i==0, "JUGADORES EN ESPERA");
         jugadoresEnEspera.encolar(jugadoresEnEspera.primero());
         jugadoresEnEspera.desencolar();
     }
@@ -272,11 +272,12 @@ void Servidor::exportarJugadoresEnEspera(Jugador *enEspera)
 }
 
 
-void Servidor::mostrarJugadoresFormateado(Jugador j, bool cabecera)
+//METODOS AUXILIARES
+void Servidor::mostrarJugadoresFormateado(Jugador j, bool cabecera, char* titulo)
 {
     if(cabecera)
     {
-        cout << endl;
+        cout << endl << titulo << endl;
         cout << setw(20) << left << "Nombre"
              << setw(5) << left << "ID"
              << setw(10) << left << "Activo"
@@ -293,5 +294,34 @@ void Servidor::mostrarJugadoresFormateado(Jugador j, bool cabecera)
          << setw(12) << left << j.latencia
          << setw(15) << left << j.puntuacion
          << setw(20) << left << j.pais << endl;
+}
+
+bool Servidor::existeJugadorEnConectados(cadena nJ)
+{
+    Jugador jugador;
+    strcpy(jugador.nombreJugador, nJ);
+
+    return jugadoresConectados.pertenece(jugador);
+}
+
+bool Servidor::existeJugadorEnEspera(cadena nJ)
+{
+    Jugador jugador, aux;
+    strcpy(jugador.nombreJugador, nJ);
+    bool encontrado=false;
+
+    int longitud = jugadoresEnEspera.longitud(), iterador=0;
+    while(iterador<longitud)
+    {
+        aux=jugadoresEnEspera.primero();
+        if(strcmp(aux.nombreJugador, nJ)==0)
+            encontrado=true;
+
+        jugadoresEnEspera.desencolar();
+        jugadoresEnEspera.encolar(aux);
+        iterador++;
+    }
+
+    return encontrado;
 }
 

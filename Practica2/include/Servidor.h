@@ -27,25 +27,17 @@ private:
     int puerto;                     //número del puerto de escucha del servidor;
     cadena localizacionGeografica;  //país en el que se encuentra ubicado físicamente el servidor.
 
-    void mostrarJugadoresFormateado(Jugador j, bool cabecera);
+
+    //METODOS AUXILIARES PRIVADOS
+    void mostrarJugadoresFormateado(Jugador j, bool cabecera, char* titulo);
 
 public:
-    ~Servidor();
     Servidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG);
+    ~Servidor();
+
+    Servidor* getSiguienteServidor();
     int getId();
     void getDireccionServidor(cadena dS);
-    void setSiguienteServidor(Servidor *pS);
-    Servidor* getSiguienteServidor();
-    bool conectarJugador(Jugador j);
-    bool ponerJugadorEnEspera(Jugador j);
-    void mostrarJugadoresConectados();
-    void mostrarJugadoresEnEspera();
-    bool estaActivo();
-    bool activar();
-    bool desactivar();
-    bool ponerEnMantenimiento();
-    void mostrarInformacion();
-    bool expulsarJugador(cadena nombre);
     void getNombreJuego(cadena nJ);
     int getPuerto();
     void getLocalizacionGeografica(cadena lG);
@@ -53,8 +45,26 @@ public:
     int getMaxJugadoresEnEspera();
     int getNumJugadoresConectados();
     int getNumJugadoresEnEspera();
+    bool estaActivo();
+
+    void setSiguienteServidor(Servidor *pS);
+
+    bool activar();
+    bool desactivar();
+    bool ponerEnMantenimiento();
+    bool conectarJugador(Jugador j);
+    bool ponerJugadorEnEspera(Jugador j);
+    bool expulsarJugador(cadena nombre);
     void exportarJugadoresConectados(Jugador *conectados);
     void exportarJugadoresEnEspera(Jugador *enEspera);
+
+    void mostrarJugadoresConectados();
+    void mostrarJugadoresEnEspera();
+    void mostrarInformacion();
+
+    //METODOS AUXILIARES PUBLICOS
+    bool existeJugadorEnConectados(cadena nJ);
+    bool existeJugadorEnEspera(cadena nJ);
 };
 
 #endif // SERVIDOR_H
