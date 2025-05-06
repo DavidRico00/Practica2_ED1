@@ -31,7 +31,6 @@ int GestorServidores::getNumServidores()
 bool GestorServidores::desplegarServidor(cadena dS, cadena nJ, int i, int mxC, int mxE, int p, cadena lG)
 {
     Servidor *servidor = new Servidor(dS, nJ, i, mxC, mxE, p, lG);
-
     if(servidor == NULL)
         return false;
 
@@ -44,37 +43,45 @@ bool GestorServidores::desplegarServidor(cadena dS, cadena nJ, int i, int mxC, i
     }
     else
     {
-        Servidor *aux=primerServidor;
+        Servidor *actual=primerServidor, *anterior=NULL;
         cadena direccionServer, localizacion;
-        bool igual=false;
-        int pos=-1, iterador=1;
 
-        while(aux!=NULL && !igual)
+        while(actual!=NULL)
         {
-            aux->getDireccionServidor(direccionServer);
-            aux->getLocalizacionGeografica(localizacion);
-            if(aux->getId()==i || (strcmp(direccionServer, dS)==0))
-                igual=true;
-
-            if(pos==-1 && (strcmp(lG, localizacion) < 0))
-                pos=iterador;
-
-            aux=aux->getSiguienteServidor();
-            iterador++;
+            actual->getDireccionServidor(direccionServer);
+            if(actual->getId()==i || (strcmp(direccionServer, dS)==0))
+                return false;
+            actual=actual->getSiguienteServidor();
         }
 
-        if(!igual)
+        actual=primerServidor;
+        while(actual!=NULL && !insertado)
         {
-            if(pos==-1)
-                pos=numServidores;
+            actual->getLocalizacionGeografica(localizacion);
+            if(strcmp(lG, localizacion) < 0)
+            {
+                if(anterior==NULL)
+                {
+                    servidor->setSiguienteServidor(primerServidor);
+                    primerServidor=servidor;
+                }
+                else
+                {
+                    anterior->setSiguienteServidor(servidor);
+                    servidor->setSiguienteServidor(actual);
+                }
+                insertado=true;
+            }
+            else
+            {
+                anterior=actual;
+                actual=actual->getSiguienteServidor();
+            }
+        }
 
-            aux=primerServidor;
-            for(int j=1; j<pos; j++)
-                aux=aux->getSiguienteServidor();
-
-            servidor->setSiguienteServidor(aux->getSiguienteServidor());
-            aux->setSiguienteServidor(servidor);
-
+        if(!insertado)
+        {
+            anterior->setSiguienteServidor(servidor);
             insertado=true;
         }
     }

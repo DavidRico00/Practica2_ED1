@@ -14,11 +14,14 @@ void prueba()
     gestor.desplegarServidor("192.168.1.3", "SpaceWar", 3, 15, 7, 8080, "Almeria") ?
         cout << "[OK] Servidor ID:3 desplegado correctamente\n" : cout << "[EROR] Error al desplegar Servidor ID:3\n";
 
-    gestor.desplegarServidor("192.168.2.1", "Call Of Duty", 1, 10, 5, 1111, "A") ?
-        cout << "[EROR] Servidor ID:1 (copia id) desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:1 (copia id)\n";
+    gestor.desplegarServidor("192.168.1.4", "SpaceWar", 4, 10, 8, 8080, "Almeria") ?
+        cout << "[OK] Servidor ID:4 desplegado correctamente\n" : cout << "[EROR] Error al desplegar Servidor ID:4\n";
 
-    gestor.desplegarServidor("192.168.1.1", "Call Of Duty", -1, 10, 5, 1111, "A") ?
-        cout << "[EROR] Servidor ID:-1 (copia host ID 1) desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:-1 (copia host ID1)\n";
+    gestor.desplegarServidor("0.0.0.0", "Prueba", 1, 0, 0, 0, "A") ?
+        cout << "[EROR] Servidor ID:1 (copia id ID:1) desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:1 (copia id ID:1)\n";
+
+    gestor.desplegarServidor("192.168.1.1", "Prueba", -1, 0, 0, 0, "A") ?
+        cout << "[EROR] Servidor ID:-1 (copia host ID:1) desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:-1 (copia host ID:1)\n";
 
 
     cout<<"\nMOSTRAR INFORMACION DE TODOS LOS SERVIDORES"<<endl;
@@ -53,7 +56,6 @@ int menu()
 int main()
 {
     prueba();
-
     int opc;
 
     do
