@@ -98,17 +98,70 @@ bool GestorServidores::desconectarServidor(cadena dS)
 
 bool GestorServidores::conectarServidor(cadena dS)
 {
+    Servidor *actual=primerServidor;
+    cadena host;
+
+    while(actual!=NULL)
+    {
+        actual->getDireccionServidor(host);
+        if(strcmp(dS, host)==0)
+            return actual->activar();
+        actual=actual->getSiguienteServidor();
+    }
     return false;
 }
 
 bool GestorServidores::realizarMantenimiento(cadena dS)
 {
+    Servidor *actual=primerServidor;
+    cadena host;
+
+    while(actual!=NULL)
+    {
+        actual->getDireccionServidor(host);
+        if(strcmp(dS, host)==0)
+            return actual->ponerEnMantenimiento();
+        actual=actual->getSiguienteServidor();
+    }
     return false;
 }
 
 bool GestorServidores::eliminarServidor(cadena dS)
 {
-    return false;
+    if(numServidores==0)
+        return false;
+
+    Servidor *actual=primerServidor, *anterior=NULL;
+    cadena host;
+    bool eliminado=false;
+
+    while(actual!=NULL && !eliminado)
+    {
+        actual->getDireccionServidor(host);
+        if(strcmp(host, dS)==0)
+        {
+            if(!actual->estaActivo())
+            {
+                if(anterior==NULL)
+                    primerServidor=actual->getSiguienteServidor();
+                else
+                    anterior->setSiguienteServidor(actual->getSiguienteServidor());
+                eliminado=true;
+
+                delete actual;
+            }
+            break;
+        }
+
+        anterior=actual;
+        actual=actual->getSiguienteServidor();
+    }
+
+    if(eliminado)
+        numServidores--;
+    if(numServidores==0)
+        primerServidor=NULL;
+    return eliminado;
 }
 
 bool GestorServidores::alojarJugador(Jugador j, cadena nomJuego, cadena host, bool &enEspera)
@@ -123,7 +176,21 @@ bool GestorServidores::expulsarJugador(cadena nJ, cadena host)
 
 int GestorServidores::getPosicionServidor(cadena dS)
 {
-    return 0;
+    Servidor *actual=primerServidor;
+    int i=1;
+    cadena host;
+
+    while(actual!=NULL)
+    {
+        actual->getDireccionServidor(host);
+        if(strcmp(dS, host)==0)
+            return i;
+
+        actual=actual->getSiguienteServidor();
+        i++;
+    }
+
+    return -1;
 }
 
 void GestorServidores::mostrarInformacionServidores(int pos)
@@ -143,7 +210,7 @@ void GestorServidores::mostrarInformacionServidores(int pos)
             if(servidor->estaActivo())
             {
                 servidor->mostrarJugadoresConectados();
-                servidor->mostrarInformacion();
+                servidor->mostrarJugadoresEnEspera();
             }
 
             servidor=servidor->getSiguienteServidor();

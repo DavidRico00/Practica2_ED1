@@ -1,33 +1,78 @@
 #include "GestorServidores.h"
 
+void mostrarServidores(GestorServidores &gestor)
+{
+    cout<<"\nMOSTRAR INFORMACION DE TODOS LOS SERVIDORES"<<endl;
+    cout<<"Numero de servidores: "<<gestor.getNumServidores()<<endl;
+    gestor.mostrarInformacionServidores(-1);
+    cout<<endl;
+}
+
 void prueba()
 {
     cout<<"PRUEBAS DE GESTOR DE SERVIDORES"<<endl;
     GestorServidores gestor;
 
+    //AÑADO ZARAGOZA
     gestor.desplegarServidor("192.168.1.1", "SpaceWar", 1, 10, 5, 8080, "Zaragoza") ?
-        cout << "[OK] Servidor ID:1 desplegado correctamente\n" : cout << "[EROR] Error al desplegar Servidor ID:1\n";
+        cout << "[OK] Servidor ID:1 desplegado correctamente. Zaragoza (no existe)\n" : cout << "[EROR] Error al desplegar Servidor ID:1. Zaragoza\n";
 
+    //AÑADO SEVILLA
     gestor.desplegarServidor("192.168.1.2", "SpaceWar", 2, 20, 10, 8080, "Sevilla") ?
-        cout << "[OK] Servidor ID:2 desplegado correctamente\n" : cout << "[EROR] Error al desplegar Servidor ID:2\n";
+        cout << "[OK] Servidor ID:2 desplegado correctamente. Sevilla (no existe)\n" : cout << "[EROR] Error al desplegar Servidor ID:2. Sevilla\n";
 
+    //AÑADO ALMERIA
     gestor.desplegarServidor("192.168.1.3", "SpaceWar", 3, 15, 7, 8080, "Almeria") ?
-        cout << "[OK] Servidor ID:3 desplegado correctamente\n" : cout << "[EROR] Error al desplegar Servidor ID:3\n";
+        cout << "[OK] Servidor ID:3 desplegado correctamente. Almeria (no existe)\n" : cout << "[EROR] Error al desplegar Servidor ID:3. Almeria\n";
 
-    gestor.desplegarServidor("192.168.1.4", "SpaceWar", 4, 10, 8, 8080, "Almeria") ?
-        cout << "[OK] Servidor ID:4 desplegado correctamente\n" : cout << "[EROR] Error al desplegar Servidor ID:4\n";
+    //ELIMINO SEVILLA
+    gestor.eliminarServidor("192.168.1.2") ?
+        cout << "[OK] Servidor Sevilla eliminado correctamente (existe)\n" : cout << "[ERROR] Error al borrar servidor en Sevilla\n";
 
+    //AÑADO BARCELONA
+    gestor.desplegarServidor("192.168.1.4", "SpaceWar", 4, 10, 8, 8080, "Barcelona") ?
+        cout << "[OK] Servidor ID:4 desplegado correctamente. Barcelona (no existe)\n" : cout << "[EROR] Error al desplegar Servidor ID:4. Barcelona\n";
+
+    //AÑADO A (ERROR)
     gestor.desplegarServidor("0.0.0.0", "Prueba", 1, 0, 0, 0, "A") ?
-        cout << "[EROR] Servidor ID:1 (copia id ID:1) desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:1 (copia id ID:1)\n";
+        cout << "[EROR] Servidor ID:1 desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:1 (copia id ID:1)\n";
 
-    gestor.desplegarServidor("192.168.1.1", "Prueba", -1, 0, 0, 0, "A") ?
-        cout << "[EROR] Servidor ID:-1 (copia host ID:1) desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:-1 (copia host ID:1)\n";
+    //AÑADO B (ERROR)
+    gestor.desplegarServidor("192.168.1.1", "Prueba", -1, 0, 0, 0, "B") ?
+        cout << "[EROR] Servidor ID:-1 desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:-1 (copia host ID:1)\n";
 
+    //POSICION DE BARCELONA
+    int pos = gestor.getPosicionServidor("192.168.1.4");
+        pos!=-1 ? cout<<"[OK] Barcelona -> Posicion: "<<pos<<" (pos=2)"<<endl : cout<<"[ERROR] Barcelona -> Posicion: "<<pos<<endl;
 
-    cout<<"\nMOSTRAR INFORMACION DE TODOS LOS SERVIDORES"<<endl;
-    cout<<"Numero de servidores: "<<gestor.getNumServidores()<<endl;
-    gestor.mostrarInformacionServidores(-1);
+    //ELIMINO BARCELONA
+    gestor.eliminarServidor("192.168.1.4") ?
+        cout << "[OK] Servidor Barcelona eliminado correctamente (existe)\n" : cout << "[ERROR] Error al borrar servidor en Barcelona\n";
+
+    //ELIMINO SEVILLA (ERROR)
+    gestor.eliminarServidor("192.168.1.2") ?
+        cout << "[ERROR] Servidor Sevilla eliminado correctamente\n" : cout << "[OK] Error al borrar servidor en Sevilla (no existe)\n";
+
+    //POSICION DE SEVILLA
+    pos = gestor.getPosicionServidor("192.168.1.2");
+        pos!=-1 ? cout<<"[ERROR] Sevilla -> Posicion: "<<pos<<endl : cout<<"[OK] Sevilla -> Posicion: "<<pos<<" (pos=-1)"<<endl;
+
+    //PONER ALMERIA EN MANTENIMIENTO
+    gestor.realizarMantenimiento("192.168.1.3") ?
+        cout<<"[OK] Servidor Almeria puesto en mantenimiento (esta inactivo)\n" : cout<<"[ERROR] Error al poner servidor Almeria puesto en mantenimiento\n";
+
+    //PONER ALMERIA EN ACTIVO
+    gestor.conectarServidor("192.168.1.3") ?
+        cout<<"[OK] Servidor Almeria activado (esta en mantenimiento)\n" : cout<<"[ERROR] Error al activar servidor Almeria\n";
+
+    //PONER ALMERIA EN MANTENIMIENTO
+    //gestor.realizarMantenimiento("192.168.1.3") ?
+        //cout<<"[ERROR] Servidor Almeria puesto en mantenimiento\n" : cout<<"[OK] Error al poner servidor Almeria puesto en mantenimiento (esta activado)\n";
+
+    mostrarServidores(gestor);
 }
+
+
 
 int menu()
 {

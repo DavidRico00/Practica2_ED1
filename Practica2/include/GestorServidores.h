@@ -29,24 +29,8 @@ public:
     //del sistema.
 
     bool conectarServidor(cadena dS);
-    //el método permite activas (poner en estado ACTIVO) el servidor cuya dirección/hostname coincide
-    //con el valor indicado en el parámetro de entrada dS. Devolverá true en caso de activar exitosamente
-    //el servidor indicado; false en caso contrario, bien porque el servidor ya estaba activo, o bien
-    //porque directamente no existía ningún nodo con la dirección/hostname indicado.
-
     bool realizarMantenimiento(cadena dS);
-    //el método permite poner en estado MANTENIMIENTO el servidor cuya dirección/hostname coincide con
-    //el valor indicado en el parámetro de entrada dS. Devolverá true en caso de poner exitosamente el
-    //servidor indicado en mantenimiento; false en caso contrario, bien porque el servidor ya estaba en
-    //dicho estado, o bien porque directamente no existía ningún nodo con la dirección/hostname indicado.
-
     bool eliminarServidor(cadena dS);
-    //el método eliminará de la estructura de nodos enlazados el servidor cuya dirección/hostname coincide
-    //con el valor indicado en el parámetro de entrada dS. Este método es aplicable solamente sobre
-    //aquellos servidores en estado INACTIVO o MANTENIMIENTO. El método devolverá true en caso de
-    //eliminarse de forma exitosa el servidor indicado; falso en caso contrario, esto es, cuando no
-    //exista ningún nodo con la dirección/hostname indicado, o bien el servidor afectado no esté INACTIVO
-    //o en MANTENIMIENTO.
 
     bool alojarJugador(Jugador j, cadena nomJuego, cadena host, bool &enEspera);
     //el método intentará alojar al jugador (tipo Jugador) j en algún servidor ACTIVO para el juego de
@@ -78,21 +62,7 @@ public:
     //dicha estructura pase a ser alojado en este servidor de forma automática.
 
     int getPosicionServidor(cadena dS);
-    //el método devolverá la posición en la que se encuentra el servidor cuya dirección/hostname es igual
-    //a dS dentro de la secuencia que forman el conjunto de nodos enlazados, siendo el primer nodo el
-    //que ocupa la posición 1. Si no hay en la estructura de nodos enlazados ningún servidor con la
-    //dirección indicada, el método devolverá un -1.
-
     void mostrarInformacionServidores(int pos);
-    //muestra por pantalla información del servidor que se encuentra en la posición indicada por el
-    //parámetro pos dentro de la secuencia de nodos-servidores, dónde el primer servidor es el situado
-    //en la posición 1. Si la posición indicada está fuera de rango, deberá informarse al usuario de tal
-    //circunstancia a través de un mensaje de error. Si la posición indicada a través de pos es -1,
-    //deberá mostrarse por pantalla información sobre la totalidad de los servidores contenidos en la
-    //estructura de nodos enlazados. Para servidores activos, será también necesario mostrar por pantalla
-    //los datos de los jugadores conectados, así como la de aquellos que estén en la cola de acceso al
-    //mismo.
-
     bool jugadorConectado(cadena nJ, cadena dS);
     bool jugadorEnEspera(cadena nJ, cadena dS);
     bool jugadorConectado(cadena nJ);
