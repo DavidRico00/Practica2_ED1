@@ -94,6 +94,8 @@ void prueba()
     gestor.jugadorConectado("David") ?
         cout<<"[OK] David si esta\n" : cout<<"[ERROR] David no esta\n";
 
+    gestor.desconectarServidor("192.168.1.1");
+
     mostrarServidores(gestor);
 }
 

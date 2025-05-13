@@ -43,10 +43,10 @@
 	<cstring>
 	<iomanip>
 
-1747129962 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\gestorservidores.cpp
+1747132427 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\gestorservidores.cpp
 	"GestorServidores.h"
 
-1746559576 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\gestorservidores.h
+1747130549 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\gestorservidores.h
 	"Servidor.h"
 
 1747129424 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\servidor.h
@@ -60,10 +60,10 @@
 1746100781 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\lista.cpp
 	"Lista.h"
 
-1747129443 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\servidor.cpp
+1747131652 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\servidor.cpp
 	"Servidor.h"
 
-1747130132 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\main.cpp
+1747132312 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\main.cpp
 	"GestorServidores.h"
 
 1746118564 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\tadlista_c_ned.h

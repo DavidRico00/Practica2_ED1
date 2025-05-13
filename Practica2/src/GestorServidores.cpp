@@ -93,7 +93,70 @@ bool GestorServidores::desplegarServidor(cadena dS, cadena nJ, int i, int mxC, i
 
 bool GestorServidores::desconectarServidor(cadena dS)
 {
-    return false;
+    Servidor *servidor=primerServidor;
+    cadena host, nombreJ, hostS;
+    bool enEspera=false, alojado=true, desactivado=false;;
+
+    while(servidor!=NULL)
+    {
+        servidor->getDireccionServidor(host);
+        if(strcmp(host, dS)==0)
+        {
+            cout<<"\nENCUENTRA EL SERVIDOR"<<endl;
+            if(servidor->estaActivo())
+            {
+                cout<<"SERVIDOR ESTA ACTIVO"<<endl;
+                servidor->getNombreJuego(nombreJ);
+                int tamaC=servidor->getNumJugadoresConectados(), tamaE=servidor->getNumJugadoresEnEspera(), i=0;
+                Jugador *jugadoresC=new Jugador[tamaC], *jugadoresE=new Jugador[tamaE];
+
+                servidor->exportarJugadoresConectados(jugadoresC);
+                servidor->exportarJugadoresConectados(jugadoresE);
+                desactivado = servidor->desactivar();
+
+                desactivado ? cout<<"SERVIDOR DESACTIVADO\n" : cout<<"SERVIDOR NO DESACTIVADO"<<endl;
+
+                while(i<tamaC && (alojado || enEspera))
+                {
+                    cout<<"ENTRA EN PRIMER WHILE"<<endl;
+                    alojado = alojarJugador(jugadoresC[i], nombreJ, hostS, enEspera);
+
+                    if(alojado)
+                        cout<<"Jugador "<<i<<" ALOJADO\n";
+                    else
+                        if(enEspera)
+                            cout<<"Jugador "<<i<<" PUESTO EN ESPERA\n";
+                    i++;
+                }
+
+                i=0;
+                while(i<tamaE && (alojado || enEspera))
+                {
+                    cout<<"ENTRA EN SEGUNDO WHILE"<<endl;
+                    alojado = alojarJugador(jugadoresE[i], nombreJ, hostS, enEspera);
+
+                    if(alojado)
+                        cout<<"Jugador Espera "<<i<<" ALOJADO\n";
+                    else
+                        if(enEspera)
+                            cout<<"Jugador Espera"<<i<<" PUESTO EN ESPERA\n";
+
+                    i++;
+                }
+            }
+            else
+            {
+                cout<<"SERVIDOR NO ESTA ACTIVO"<<endl;
+                desactivado = servidor->desactivar();
+            }
+
+            return desactivado;
+        }
+        else
+            servidor=servidor->getSiguienteServidor();
+    }
+
+    return desactivado;
 }
 
 bool GestorServidores::conectarServidor(cadena dS)
@@ -274,8 +337,6 @@ void GestorServidores::mostrarInformacionServidores(int pos)
     }
 }
 
-
-//MODIFICAR COSAS
 bool GestorServidores::jugadorConectado(cadena nJ, cadena dS)
 {
     cadena direccion;
@@ -370,5 +431,20 @@ bool GestorServidores::jugadorEnEspera(cadena nJ)
     }
 
     return encontrado;
+}
+
+//METODOS AUXILIARES
+
+void GestorServidores::ordenarPorLatencia(Jugador* jugadores, int numJugadores)
+{
+    for (int i = 0; i < numJugadores - 1; ++i) {
+        for (int j = 0; j < numJugadores - i - 1; ++j) {
+            if (jugadores[j].latencia > jugadores[j + 1].latencia) {
+                Jugador temp = jugadores[j];
+                jugadores[j] = jugadores[j + 1];
+                jugadores[j + 1] = temp;
+            }
+        }
+    }
 }
 
