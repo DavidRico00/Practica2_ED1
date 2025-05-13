@@ -7,6 +7,8 @@
 #include <iostream>
 #include <cstring>
 #include <iomanip>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 typedef char cadena[50];

@@ -1,6 +1,6 @@
 #include "GestorServidores.h"
 
-Jugador crearJugador(cadena nJ, int id, bool activo, int latencia, long puntuacion, cadena pais);
+Jugador crearJugador(cadena nJ, int id, bool activo, cadena pais);
 void cargarServidores(GestorServidores &gestor);
 int menu(int num);
 
@@ -34,7 +34,7 @@ int main()
             else
             {
                 int pos = gestor.getPosicionServidor(host);
-                if(pos>1)
+                if(pos>0)
                     gestor.mostrarInformacionServidores(pos);
                 else
                     cout<<"\nNo existe ningun servidor con esa direccion"<<endl;
@@ -108,22 +108,92 @@ int main()
 
         case 5:
         {
+            cout<<"Dime la direccion del servidor a desactivar: ";
+            cin>>host;
 
+            int pos = gestor.getPosicionServidor(host);
+
+            if(pos==-1)
+                cout<<"\nNo existe ningun servidor con esa direccion"<<endl;
+            else
+            {
+                if(gestor.desconectarServidor(host))
+                    cout<<"\nSe ha desconectado el servidor correctamente"<<endl;
+                else
+                    cout<<"\nNo se ha podido desconectar el servidor"<<endl;
+            }
         } break;
 
         case 6:
         {
+            cout<<"Dime la direccion del servidor a poner en mantenimiento: ";
+            cin>>host;
 
+            int pos = gestor.getPosicionServidor(host);
+
+            if(pos==-1)
+                cout<<"\nNo existe ningun servidor con esa direccion"<<endl;
+            else
+            {
+                if(gestor.realizarMantenimiento(host))
+                    cout<<"\nEl servidor se ha puesto en mantenimiento correctamente"<<endl;
+                else
+                    cout<<"\nEl servidor no se ha podido poner en mantenimiento"<<endl;
+            }
         } break;
 
         case 7:
         {
+            Jugador jugador;
+            cout<<"Dime el nick del nuevo jugador: ";
+            cin.ignore();   cin.getline(jugador.nombreJugador, 50);
 
+            if(gestor.jugadorConectado(jugador.nombreJugador))
+                cout<<"\nEl nick ya esta utilizado en el sistema"<<endl;
+            else
+            {
+                srand(time(0));
+
+                cout<<"Dime el identificar del jugador: ";
+                cin>>jugador.ID;
+                cout<<"Dime el pais del jugador: ";
+                cin.ignore();   cin.getline(jugador.pais, 50);
+                jugador.latencia = rand() % 500 + 1;
+                jugador.puntuacion = rand() % 100000;
+                jugador.activo=true;
+
+                cadena nombreJuego;
+                cout<<"\nDime el nombre del juego al que quieres entrar: ";
+                cin>>nombreJuego;
+
+                bool enEspera, alojado;
+                alojado = gestor.alojarJugador(jugador, nombreJuego, host, enEspera);
+
+                if(alojado)
+                    cout<<"\nEl jugado ha sido alojado correctamente en el servidor con direccion "<<host<<endl;
+                else if(!alojado && enEspera)
+                    cout<<"\nEl jugado esta en espera en el servidor con direccion "<<host<<endl;
+                else
+                    cout<<"\nEl jugador no se ha podido alojar en ningun servidor"<<endl;
+            }
         } break;
 
         case 8:
         {
+            cadena nombreJugador;
+            cout<<"Dime el nombre del jugador a eliminar: ";
+            cin.ignore();
+            cin.getline(nombreJugador, 50);
 
+            if(!gestor.jugadorConectado(nombreJugador))
+                cout<<"\nEl jugador "<<nombreJugador<<" no esta en ningun servidor"<<endl;
+            else
+            {
+                if(gestor.expulsarJugador(nombreJugador, host))
+                    cout<<"\nJugador "<<nombreJugador<<" eliminado correctamente del servidor "<<host<<endl;
+                else
+                    cout<<"\nNo se ha podido eliminar al jugador "<<nombreJugador<<endl;
+            }
         } break;
 
         case 9:
@@ -141,12 +211,23 @@ int main()
     return 0;
 }
 
+
 void cargarServidores(GestorServidores &gestor)
 {
-    gestor.desplegarServidor("0.0.0.1", "SpaceWar", 1, 1, 2, 8080, "Huelva");
-    gestor.desplegarServidor("0.0.0.2", "SpaceWar", 2, 2, 1, 8080, "Cadiz");
-    gestor.desplegarServidor("0.0.0.3", "Call of Duty", 3, 2, 1, 8080, "Sevilla");
-    gestor.desplegarServidor("0.0.0.4", "Call of Duty", 4, 1, 2, 8080, "Almeria");
+    cadena host;    bool enEspera;
+
+    gestor.desplegarServidor("0.0.0.1", "gta",  1, 1, 2, 8080, "Huelva");
+    gestor.desplegarServidor("0.0.0.2", "gta",  2, 2, 1, 8080, "Cadiz");
+    //gestor.desplegarServidor("0.0.0.3", "cod",  3, 2, 1, 8080, "Sevilla");
+    //gestor.desplegarServidor("0.0.0.4", "cod",  4, 1, 2, 8080, "Almeria");
+
+    gestor.conectarServidor("0.0.0.1");gestor.conectarServidor("0.0.0.2");
+    gestor.conectarServidor("0.0.0.3");gestor.conectarServidor("0.0.0.4");
+
+    gestor.alojarJugador(crearJugador("david 1", 1, true, "huelva"), "gta", host, enEspera);
+    //gestor.alojarJugador(crearJugador("david 2", 2, true, "huelva"), "gta", host, enEspera);
+    //gestor.alojarJugador(crearJugador("david 3", 3, true, "huelva"), "gta", host, enEspera);
+
 }
 
 int menu(int num)
@@ -173,14 +254,15 @@ int menu(int num)
     return opcion;
 }
 
-Jugador crearJugador(cadena nJ, int id, bool activo, int latencia, long puntuacion, cadena pais)
+Jugador crearJugador(cadena nJ, int id, bool activo, cadena pais)
 {
+    srand(time(0));
     Jugador j;
     strcpy(j.nombreJugador, nJ);
     j.ID=id;
     j.activo=activo;
-    j.latencia=latencia;
-    j.puntuacion=puntuacion;
+    j.latencia = rand() % 500 + 1;
+    j.puntuacion = rand() % 100000;
     strcpy(j.pais, pais);
 
     return j;

@@ -38,12 +38,14 @@
 1746463608 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\cola.h
 	"Comun.h"
 
-1746025246 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\comun.h
+1747159256 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\comun.h
 	<iostream>
 	<cstring>
 	<iomanip>
+	<cstdlib>
+	<ctime>
 
-1747146949 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\gestorservidores.cpp
+1747157762 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\gestorservidores.cpp
 	"GestorServidores.h"
 
 1747130549 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\gestorservidores.h
@@ -63,7 +65,7 @@
 1747131652 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\servidor.cpp
 	"Servidor.h"
 
-1747147104 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\main.cpp
+1747160050 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\main.cpp
 	"GestorServidores.h"
 
 1746118564 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\tadlista_c_ned.h

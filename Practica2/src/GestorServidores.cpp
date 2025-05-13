@@ -309,9 +309,8 @@ void GestorServidores::mostrarInformacionServidores(int pos)
                 servidor->mostrarJugadoresConectados();
                 servidor->mostrarJugadoresEnEspera();
             }
-
-            servidor=servidor->getSiguienteServidor();
         }
+        servidor=servidor->getSiguienteServidor();
     }
 }
 
@@ -411,8 +410,8 @@ bool GestorServidores::jugadorEnEspera(cadena nJ)
     return encontrado;
 }
 
-//METODOS AUXILIARES
 
+//METODOS AUXILIARES
 void GestorServidores::ordenarPorLatencia(Jugador* jugadores, int numJugadores)
 {
     for (int i = 0; i < numJugadores - 1; ++i) {
