@@ -21,7 +21,7 @@ Jugador crearJugador(cadena nJ, int id, bool activo, int latencia, long puntuaci
     return j;
 }
 
-void prueba()
+void pruebaGestorServidores()
 {
     cadena host;
     bool enEspera;
@@ -91,8 +91,8 @@ void prueba()
     //ALOJAR JUGADOR
     gestor.alojarJugador(j1, "SpaceWar", host, enEspera);
 
-    gestor.jugadorConectado("David") ?
-        cout<<"[OK] David si esta\n" : cout<<"[ERROR] David no esta\n";
+    gestor.jugadorConectado("David", "192.168.1.1") ?
+        cout<<"[OK] David si esta en Servidor Zaragoza\n" : cout<<"[ERROR] David no esta en Servidor Zaragoza\n";
 
     gestor.desconectarServidor("192.168.1.1");
 
@@ -179,7 +179,7 @@ int main()
 
         case 9:
         {
-            prueba();
+            pruebaGestorServidores();
         } break;
 
         }//fin switch

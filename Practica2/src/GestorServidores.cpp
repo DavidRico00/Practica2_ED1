@@ -102,53 +102,31 @@ bool GestorServidores::desconectarServidor(cadena dS)
         servidor->getDireccionServidor(host);
         if(strcmp(host, dS)==0)
         {
-            cout<<"\nENCUENTRA EL SERVIDOR"<<endl;
             if(servidor->estaActivo())
             {
-                cout<<"SERVIDOR ESTA ACTIVO"<<endl;
                 servidor->getNombreJuego(nombreJ);
                 int tamaC=servidor->getNumJugadoresConectados(), tamaE=servidor->getNumJugadoresEnEspera(), i=0;
                 Jugador *jugadoresC=new Jugador[tamaC], *jugadoresE=new Jugador[tamaE];
 
                 servidor->exportarJugadoresConectados(jugadoresC);
-                servidor->exportarJugadoresConectados(jugadoresE);
+                servidor->exportarJugadoresEnEspera(jugadoresE);
                 desactivado = servidor->desactivar();
-
-                desactivado ? cout<<"SERVIDOR DESACTIVADO\n" : cout<<"SERVIDOR NO DESACTIVADO"<<endl;
 
                 while(i<tamaC && (alojado || enEspera))
                 {
-                    cout<<"ENTRA EN PRIMER WHILE"<<endl;
                     alojado = alojarJugador(jugadoresC[i], nombreJ, hostS, enEspera);
-
-                    if(alojado)
-                        cout<<"Jugador "<<i<<" ALOJADO\n";
-                    else
-                        if(enEspera)
-                            cout<<"Jugador "<<i<<" PUESTO EN ESPERA\n";
                     i++;
                 }
 
                 i=0;
                 while(i<tamaE && (alojado || enEspera))
                 {
-                    cout<<"ENTRA EN SEGUNDO WHILE"<<endl;
                     alojado = alojarJugador(jugadoresE[i], nombreJ, hostS, enEspera);
-
-                    if(alojado)
-                        cout<<"Jugador Espera "<<i<<" ALOJADO\n";
-                    else
-                        if(enEspera)
-                            cout<<"Jugador Espera"<<i<<" PUESTO EN ESPERA\n";
-
                     i++;
                 }
             }
             else
-            {
-                cout<<"SERVIDOR NO ESTA ACTIVO"<<endl;
                 desactivado = servidor->desactivar();
-            }
 
             return desactivado;
         }
