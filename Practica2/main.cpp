@@ -1,159 +1,108 @@
 #include "GestorServidores.h"
 
-void mostrarServidores(GestorServidores &gestor)
-{
-    cout<<"\nMOSTRAR INFORMACION DE TODOS LOS SERVIDORES"<<endl;
-    cout<<"Numero de servidores: "<<gestor.getNumServidores()<<endl;
-    gestor.mostrarInformacionServidores(-1);
-    cout<<endl;
-}
-
-Jugador crearJugador(cadena nJ, int id, bool activo, int latencia, long puntuacion, cadena pais)
-{
-    Jugador j;
-    strcpy(j.nombreJugador, nJ);
-    j.ID=id;
-    j.activo=activo;
-    j.latencia=latencia;
-    j.puntuacion=puntuacion;
-    strcpy(j.pais, pais);
-
-    return j;
-}
-
-void pruebaGestorServidores()
-{
-    cadena host;
-    bool enEspera;
-
-    cout<<"PRUEBAS DE GESTOR DE SERVIDORES"<<endl;
-    GestorServidores gestor;
-
-    //AÑADO ZARAGOZA
-    gestor.desplegarServidor("192.168.1.1", "SpaceWar", 1, 30, 5, 8080, "Zaragoza") ?
-        cout << "[OK] Servidor ID:1 desplegado correctamente. Zaragoza (no existe)\n" : cout << "[EROR] Error al desplegar Servidor ID:1. Zaragoza\n";
-
-    //AÑADO SEVILLA
-    gestor.desplegarServidor("192.168.1.2", "SpaceWar", 2, 20, 10, 8080, "Sevilla") ?
-        cout << "[OK] Servidor ID:2 desplegado correctamente. Sevilla (no existe)\n" : cout << "[EROR] Error al desplegar Servidor ID:2. Sevilla\n";
-
-    //AÑADO ALMERIA
-    gestor.desplegarServidor("192.168.1.3", "SpaceWar", 3, 15, 7, 8080, "Almeria") ?
-        cout << "[OK] Servidor ID:3 desplegado correctamente. Almeria (no existe)\n" : cout << "[EROR] Error al desplegar Servidor ID:3. Almeria\n";
-
-    //ELIMINO SEVILLA
-    gestor.eliminarServidor("192.168.1.2") ?
-        cout << "[OK] Servidor Sevilla eliminado correctamente (existe)\n" : cout << "[ERROR] Error al borrar servidor en Sevilla\n";
-
-    //AÑADO BARCELONA
-    gestor.desplegarServidor("192.168.1.4", "SpaceWar", 4, 10, 8, 8080, "Barcelona") ?
-        cout << "[OK] Servidor ID:4 desplegado correctamente. Barcelona (no existe)\n" : cout << "[EROR] Error al desplegar Servidor ID:4. Barcelona\n";
-
-    //AÑADO A (ERROR)
-    gestor.desplegarServidor("0.0.0.0", "Prueba", 1, 0, 0, 0, "A") ?
-        cout << "[EROR] Servidor ID:1 desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:1 (copia id ID:1)\n";
-
-    //AÑADO B (ERROR)
-    gestor.desplegarServidor("192.168.1.1", "Prueba", -1, 0, 0, 0, "B") ?
-        cout << "[EROR] Servidor ID:-1 desplegado correctamente\n" : cout << "[OK] Error al desplegar Servidor ID:-1 (copia host ID:1)\n";
-
-    //POSICION DE BARCELONA
-    int pos = gestor.getPosicionServidor("192.168.1.4");
-        pos!=-1 ? cout<<"[OK] Barcelona -> Posicion: "<<pos<<" (pos=2)"<<endl : cout<<"[ERROR] Barcelona -> Posicion: "<<pos<<endl;
-
-    //ELIMINO BARCELONA
-    gestor.eliminarServidor("192.168.1.4") ?
-        cout << "[OK] Servidor Barcelona eliminado correctamente (existe)\n" : cout << "[ERROR] Error al borrar servidor en Barcelona\n";
-
-    //ELIMINO SEVILLA (ERROR)
-    gestor.eliminarServidor("192.168.1.2") ?
-        cout << "[ERROR] Servidor Sevilla eliminado correctamente\n" : cout << "[OK] Error al borrar servidor en Sevilla (no existe)\n";
-
-    //POSICION DE SEVILLA
-    pos = gestor.getPosicionServidor("192.168.1.2");
-        pos!=-1 ? cout<<"[ERROR] Sevilla -> Posicion: "<<pos<<endl : cout<<"[OK] Sevilla -> Posicion: "<<pos<<" (pos=-1)"<<endl;
-
-    //PONER ALMERIA EN MANTENIMIENTO
-    gestor.realizarMantenimiento("192.168.1.3") ?
-        cout<<"[OK] Servidor Almeria puesto en mantenimiento (esta inactivo)\n" : cout<<"[ERROR] Error al poner servidor Almeria puesto en mantenimiento\n";
-
-    //PONER ALMERIA EN ACTIVO
-    gestor.conectarServidor("192.168.1.3") ?
-        cout<<"[OK] Servidor Almeria activado (esta en mantenimiento)\n" : cout<<"[ERROR] Error al activar servidor Almeria\n";
-
-
-
-    //PONER ZARAGOZA EN ACTIVO
-    gestor.conectarServidor("192.168.1.1");
-
-    Jugador j1 = crearJugador("David", 1, true, 20, 1000, "Huelva");
-
-    //ALOJAR JUGADOR
-    gestor.alojarJugador(j1, "SpaceWar", host, enEspera);
-
-    gestor.jugadorConectado("David", "192.168.1.1") ?
-        cout<<"[OK] David si esta en Servidor Zaragoza\n" : cout<<"[ERROR] David no esta en Servidor Zaragoza\n";
-
-    gestor.desconectarServidor("192.168.1.1");
-
-    mostrarServidores(gestor);
-}
-
-
-
-int menu()
-{
-    int opcion;
-    do
-    {
-        CLS;
-        cout<<"GESTOR DE SERVIDORES   v1.0"<<endl;
-        cout<<"================================"<<endl;
-        cout<<"1. Mostrar Servidor\n2. Crear Servidor\n3. Eliminar servidor\n4. ActivarServidor"<<endl;
-        cout<<"5. Desactivar Servidor\n6. Programar mantenimiento de servidor\n7. Conectar jugador"<<endl;
-        cout<<"8. Expulsar jugador\n9. Salir\n"<<endl;
-        cout<<"> Seleccione una opcion: ";
-        cin>>opcion;
-        if(opcion<1 || opcion>9)
-        {
-            cout<<"Opcion no valida, intentelo de nuevo\n\n";
-            PAUSE;
-        }
-    }
-    while(opcion<1 || opcion>9);
-
-    return opcion;
-}
+Jugador crearJugador(cadena nJ, int id, bool activo, int latencia, long puntuacion, cadena pais);
+void cargarServidores(GestorServidores &gestor);
+int menu(int num);
 
 int main()
 {
     int opc;
     GestorServidores gestor;
+    cargarServidores(gestor);
 
     do
     {
-        opc = menu();
+        opc = menu(gestor.getNumServidores());
+        cout<<endl;
+
+        cadena host;
 
         switch(opc)
         {
 
         case 1:
         {
+            cout<<"Dime la direccion de host del servidor o ALL para ver todos: ";
+            cin>>host;
+            if(strcmp(host, "ALL")==0)
+            {
+                if(gestor.getNumServidores()>0)
+                    gestor.mostrarInformacionServidores(-1);
+                else
+                    cout<<"\nNo existe ningun servidor para mostrar"<<endl;
+            }
+            else
+            {
+                int pos = gestor.getPosicionServidor(host);
+                if(pos>1)
+                    gestor.mostrarInformacionServidores(pos);
+                else
+                    cout<<"\nNo existe ningun servidor con esa direccion"<<endl;
+            }
 
         } break;
 
         case 2:
         {
+            cadena nombreJuego, lGeo;
+            int id, puerto, maxCon, maxEsp;
+
+            cout<<"Dime la direccion de host: ";
+            cin>>host;
+            cout<<"Dime el identificador: ";
+            cin>>id;
+            cout<<"Dime nombre del juego: ";
+            cin.ignore();
+            cin.getline(nombreJuego, 50);
+            cout<<"Dime el puerto: ";
+            cin>>puerto;
+            cout<<"Dime el numero maximo de jugadores conectados: ";
+            cin>>maxCon;
+            cout<<"Dime el numero maximo de jugadores en espera: ";
+            cin>>maxEsp;
+            cout<<"Dime la localizacion del servidor: ";
+            cin.ignore();
+            cin.getline(lGeo, 50);
+
+            gestor.desplegarServidor(host, nombreJuego, id, maxCon, maxEsp, puerto, lGeo) ?
+                cout<<"\nSe ha desplegado correctamente el nuevo servidor\n" : cout<<"\nNo se ha podido desplegar el nuevo servidor\n";
 
         } break;
 
         case 3:
         {
+            cout<<"Dime la direccion del servidor a eliminar: ";
+            cin>>host;
+
+            int pos = gestor.getPosicionServidor(host);
+
+            if(pos==-1)
+                cout<<"\nNo existe ningun servidor con esa direccion"<<endl;
+            else
+            {
+                gestor.desconectarServidor(host);
+                gestor.eliminarServidor(host) ?
+                    cout<<"\nServidor eliminado con exito\n" : cout<<"\nNo se ha podido eliminar el servidor\n";
+            }
 
         } break;
 
         case 4:
         {
+            cout<<"Dime la direccion del servidor a eliminar: ";
+            cin>>host;
+
+            int pos = gestor.getPosicionServidor(host);
+
+            if(pos==-1)
+                cout<<"\nNo existe ningun servidor con esa direccion"<<endl;
+            else
+            {
+                if(gestor.conectarServidor(host))
+                    cout<<"\nSe ha conectado el servidor correctamente"<<endl;
+                else
+                    cout<<"\nNo se ha podido conectar el servidor"<<endl;
+            }
 
         } break;
 
@@ -179,7 +128,7 @@ int main()
 
         case 9:
         {
-            pruebaGestorServidores();
+            cout<<"Saliendo..."<<endl;
         } break;
 
         }//fin switch
@@ -190,4 +139,49 @@ int main()
     while(opc != 9);
 
     return 0;
+}
+
+void cargarServidores(GestorServidores &gestor)
+{
+    gestor.desplegarServidor("0.0.0.1", "SpaceWar", 1, 1, 2, 8080, "Huelva");
+    gestor.desplegarServidor("0.0.0.2", "SpaceWar", 2, 2, 1, 8080, "Cadiz");
+    gestor.desplegarServidor("0.0.0.3", "Call of Duty", 3, 2, 1, 8080, "Sevilla");
+    gestor.desplegarServidor("0.0.0.4", "Call of Duty", 4, 1, 2, 8080, "Almeria");
+}
+
+int menu(int num)
+{
+    int opcion;
+    do
+    {
+        CLS;
+        cout<<"GESTOR DE SERVIDORES   v1.0\t\tNum Servidores: "<<num<<endl;
+        cout<<"================================"<<endl;
+        cout<<"1. Mostrar Servidor\n2. Crear Servidor\n3. Eliminar servidor\n4. Activar Servidor"<<endl;
+        cout<<"5. Desactivar Servidor\n6. Programar mantenimiento de servidor\n7. Conectar jugador"<<endl;
+        cout<<"8. Expulsar jugador\n9. Salir\n"<<endl;
+        cout<<"> Seleccione una opcion: ";
+        cin>>opcion;
+        if(opcion<1 || opcion>9)
+        {
+            cout<<"Opcion no valida, intentelo de nuevo\n\n";
+            PAUSE;
+        }
+    }
+    while(opcion<1 || opcion>9);
+
+    return opcion;
+}
+
+Jugador crearJugador(cadena nJ, int id, bool activo, int latencia, long puntuacion, cadena pais)
+{
+    Jugador j;
+    strcpy(j.nombreJugador, nJ);
+    j.ID=id;
+    j.activo=activo;
+    j.latencia=latencia;
+    j.puntuacion=puntuacion;
+    strcpy(j.pais, pais);
+
+    return j;
 }

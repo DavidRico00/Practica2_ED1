@@ -191,17 +191,17 @@ bool GestorServidores::eliminarServidor(cadena dS)
 
                 delete actual;
             }
-            break;
         }
-
-        anterior=actual;
-        actual=actual->getSiguienteServidor();
+        else
+        {
+            anterior=actual;
+            actual=actual->getSiguienteServidor();
+        }
     }
 
     if(eliminado)
         numServidores--;
-    if(numServidores==0)
-        primerServidor=NULL;
+
     return eliminado;
 }
 
