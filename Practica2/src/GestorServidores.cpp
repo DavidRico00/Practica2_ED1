@@ -166,11 +166,67 @@ bool GestorServidores::eliminarServidor(cadena dS)
 
 bool GestorServidores::alojarJugador(Jugador j, cadena nomJuego, cadena host, bool &enEspera)
 {
+    Servidor *actual=primerServidor, *servidorConectado=NULL, *servidorEspera=NULL;
+    cadena nombreJuego;
+    int maximoConectado=0, maximoEspera=0, auxCon, auxEsp;
+
+    while(actual!=NULL)
+    {
+        actual->getNombreJuego(nombreJuego);
+        if(strcmp(nombreJuego, nomJuego)==0 && actual->estaActivo())
+        {
+            auxCon = actual->getMaxJugadoresConectados() - actual->getNumJugadoresConectados();
+            auxEsp = actual->getMaxJugadoresEnEspera() - actual->getNumJugadoresEnEspera();
+
+            if(auxCon > maximoConectado)
+            {
+                maximoConectado = auxCon;
+                servidorConectado = actual;
+            }
+
+            if(actual->getMaxJugadoresEnEspera()-actual->getNumJugadoresEnEspera() > maximoEspera)
+            {
+                maximoEspera = auxEsp;
+                servidorEspera = actual;
+            }
+        }
+        actual=actual->getSiguienteServidor();
+    }
+
+    if(servidorConectado!=NULL)
+    {
+        enEspera=false;
+        servidorConectado->getDireccionServidor(host);
+        servidorConectado->conectarJugador(j);
+        return true;
+    }
+    else if(servidorEspera!=NULL)
+    {
+        enEspera=true;
+        servidorEspera->getDireccionServidor(host);
+        servidorEspera->ponerJugadorEnEspera(j);
+    }
+    else
+        enEspera=false;
+
     return false;
 }
 
 bool GestorServidores::expulsarJugador(cadena nJ, cadena host)
 {
+    Servidor *servidor=primerServidor;
+
+    while(servidor!=NULL)
+    {
+        if(servidor->expulsarJugador(nJ))
+        {
+            servidor->getDireccionServidor(host);
+            return true;
+        }
+        else
+            servidor=servidor->getSiguienteServidor();
+    }
+
     return false;
 }
 
@@ -218,6 +274,8 @@ void GestorServidores::mostrarInformacionServidores(int pos)
     }
 }
 
+
+//MODIFICAR COSAS
 bool GestorServidores::jugadorConectado(cadena nJ, cadena dS)
 {
     cadena direccion;
@@ -227,7 +285,17 @@ bool GestorServidores::jugadorConectado(cadena nJ, cadena dS)
     {
         servidor->getDireccionServidor(direccion);
         if(strcmp(dS, direccion)==0)
-            return servidor->existeJugadorEnConectados(nJ);
+        {
+            int tama = servidor->getNumJugadoresConectados();
+            Jugador *tabla = new Jugador[tama];
+            servidor->exportarJugadoresConectados(tabla);
+
+            for(int i=0; i<tama; i++)
+                if(strcmp(tabla[i].nombreJugador, nJ)==0)
+                    return true;
+
+            return false;
+        }
         servidor=servidor->getSiguienteServidor();
     }
 
@@ -243,7 +311,17 @@ bool GestorServidores::jugadorEnEspera(cadena nJ, cadena dS)
     {
         servidor->getDireccionServidor(direccion);
         if(strcmp(dS, direccion)==0)
-            return servidor->existeJugadorEnEspera(nJ);
+        {
+            int tama = servidor->getNumJugadoresEnEspera();
+            Jugador *tabla = new Jugador[tama];
+            servidor->exportarJugadoresEnEspera(tabla);
+
+            for(int i=0; i<tama; i++)
+                if(strcmp(tabla[i].nombreJugador, nJ)==0)
+                    return true;
+
+            return false;
+        }
         servidor=servidor->getSiguienteServidor();
     }
 
@@ -254,10 +332,18 @@ bool GestorServidores::jugadorConectado(cadena nJ)
 {
     Servidor *servidor=primerServidor;
     bool encontrado=false;
+    int tama;
 
     while(servidor!=NULL && !encontrado)
     {
-        encontrado = servidor->existeJugadorEnConectados(nJ);
+        tama = servidor->getNumJugadoresConectados();
+        Jugador *tabla = new Jugador[tama];
+        servidor->exportarJugadoresConectados(tabla);
+
+        for(int i=0; i<tama; i++)
+            if(strcmp(tabla[i].nombreJugador, nJ)==0)
+                encontrado=true;
+
         servidor=servidor->getSiguienteServidor();
     }
 
@@ -268,10 +354,18 @@ bool GestorServidores::jugadorEnEspera(cadena nJ)
 {
     Servidor *servidor=primerServidor;
     bool encontrado=false;
+    int tama;
 
     while(servidor!=NULL && !encontrado)
     {
-        encontrado = servidor->existeJugadorEnEspera(nJ);
+        tama = servidor->getNumJugadoresEnEspera();
+        Jugador *tabla = new Jugador[tama];
+        servidor->exportarJugadoresEnEspera(tabla);
+
+        for(int i=0; i<tama; i++)
+            if(strcmp(tabla[i].nombreJugador, nJ)==0)
+                encontrado=true;
+
         servidor=servidor->getSiguienteServidor();
     }
 

@@ -43,13 +43,13 @@
 	<cstring>
 	<iomanip>
 
-1746558761 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\gestorservidores.cpp
+1747129962 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\gestorservidores.cpp
 	"GestorServidores.h"
 
-1746558365 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\gestorservidores.h
+1746559576 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\gestorservidores.h
 	"Servidor.h"
 
-1746548901 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\servidor.h
+1747129424 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\servidor.h
 	"TADLista_C_NED.h"
 	"Cola.h"
 
@@ -60,10 +60,10 @@
 1746100781 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\lista.cpp
 	"Lista.h"
 
-1746549251 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\servidor.cpp
+1747129443 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\src\servidor.cpp
 	"Servidor.h"
 
-1746559291 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\main.cpp
+1747130132 source:c:\users\user\onedrive\escritorio\practica2_ed1\practica2\main.cpp
 	"GestorServidores.h"
 
 1746118564 c:\users\user\onedrive\escritorio\practica2_ed1\practica2\include\tadlista_c_ned.h

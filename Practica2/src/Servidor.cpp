@@ -41,15 +41,14 @@ Servidor* Servidor::getSiguienteServidor()
 bool Servidor::conectarJugador(Jugador j)
 {
     int longitud = jugadoresConectados.longitud();
-
-    if(longitud >= maxJugadoresConectados)
+    if(longitud == maxJugadoresConectados)
         return false;
 
-    int i=1, pos=jugadoresConectados.posicion(j);
-
-    if(pos!=-1)
+    int pos = jugadoresConectados.posicion(j);
+    if(pos != -1)
         return false;
 
+    int i=1;
     while(i<=longitud && jugadoresConectados.observar(i).puntuacion < j.puntuacion)
         i++;
 
@@ -141,6 +140,9 @@ void Servidor::mostrarInformacion()
     cout<<"IP/hostname: "<<direccionServidor<<endl;
     cout<<"ID: "<<id<<endl;
     cout<<"Estado: "<<estado<<endl;
+    cout<<"Nombre de juego: "<<nombreJuego<<endl;
+    cout<<"Num Jugadores Maximo Conectados: "<<maxJugadoresConectados<<endl;
+    cout<<"Num Jugadores Conectados: "<<jugadoresConectados.longitud()<<endl;
     cout<<"Num Jugadores Disponibles: "<<(maxJugadoresConectados-jugadoresConectados.longitud())<<endl;
     cout<<"Num Jugadores Maximo en Espera: "<<maxJugadoresEnEspera<<endl;
     cout<<"Num Jugadores en Espera: "<<jugadoresEnEspera.longitud()<<endl;
@@ -159,45 +161,36 @@ void Servidor::mostrarInformacion()
 
 bool Servidor::expulsarJugador(cadena nombre)
 {
-    if(!estaActivo())
-        return false;
-
     bool expulsado=false;
 
     Jugador j, aux;
     strcpy(j.nombreJugador, nombre);
 
     int pos = jugadoresConectados.posicion(j);
-
     if(pos != -1)
     {
         jugadoresConectados.eliminar(pos);
 
         if(!jugadoresEnEspera.esvacia())
         {
-            conectarJugador(jugadoresEnEspera.primero());
+            expulsado=conectarJugador(jugadoresEnEspera.primero());
             jugadoresEnEspera.desencolar();
         }
-
-        expulsado=true;
+        else
+            expulsado=true;
     }
     else
     {
-        int longitud = jugadoresEnEspera.longitud(), i=0;
-
-        while(!expulsado && i<longitud)
+        int longitud = jugadoresEnEspera.longitud();
+        for(int i=0; i<longitud; i++)
         {
             aux = jugadoresEnEspera.primero();
-            if(strcmp(nombre, aux.nombreJugador)==0)
-            {
-                expulsado=true;
-            }
-            else
-            {
-                jugadoresEnEspera.encolar(aux);
-                i++;
-            }
             jugadoresEnEspera.desencolar();
+
+            if(strcmp(nombre, aux.nombreJugador)==0)
+                expulsado=true;
+            else
+                jugadoresEnEspera.encolar(aux);
         }
     }
 
@@ -282,8 +275,8 @@ void Servidor::mostrarJugadoresFormateado(Jugador j, bool cabecera, char* titulo
              << setw(5) << left << "ID"
              << setw(10) << left << "Activo"
              << setw(12) << left << "Latencia"
-             << setw(15) << left << "Puntuación"
-             << setw(20) << left << "País" << endl;
+             << setw(15) << left << "Puntuacion"
+             << setw(20) << left << "Pais" << endl;
 
         cout << string(87, '-') << endl;
     }
@@ -294,34 +287,5 @@ void Servidor::mostrarJugadoresFormateado(Jugador j, bool cabecera, char* titulo
          << setw(12) << left << j.latencia
          << setw(15) << left << j.puntuacion
          << setw(20) << left << j.pais << endl;
-}
-
-bool Servidor::existeJugadorEnConectados(cadena nJ)
-{
-    Jugador jugador;
-    strcpy(jugador.nombreJugador, nJ);
-
-    return jugadoresConectados.pertenece(jugador);
-}
-
-bool Servidor::existeJugadorEnEspera(cadena nJ)
-{
-    Jugador jugador, aux;
-    strcpy(jugador.nombreJugador, nJ);
-    bool encontrado=false;
-
-    int longitud = jugadoresEnEspera.longitud(), iterador=0;
-    while(iterador<longitud)
-    {
-        aux=jugadoresEnEspera.primero();
-        if(strcmp(aux.nombreJugador, nJ)==0)
-            encontrado=true;
-
-        jugadoresEnEspera.desencolar();
-        jugadoresEnEspera.encolar(aux);
-        iterador++;
-    }
-
-    return encontrado;
 }
 

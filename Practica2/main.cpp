@@ -8,13 +8,29 @@ void mostrarServidores(GestorServidores &gestor)
     cout<<endl;
 }
 
+Jugador crearJugador(cadena nJ, int id, bool activo, int latencia, long puntuacion, cadena pais)
+{
+    Jugador j;
+    strcpy(j.nombreJugador, nJ);
+    j.ID=id;
+    j.activo=activo;
+    j.latencia=latencia;
+    j.puntuacion=puntuacion;
+    strcpy(j.pais, pais);
+
+    return j;
+}
+
 void prueba()
 {
+    cadena host;
+    bool enEspera;
+
     cout<<"PRUEBAS DE GESTOR DE SERVIDORES"<<endl;
     GestorServidores gestor;
 
     //AÑADO ZARAGOZA
-    gestor.desplegarServidor("192.168.1.1", "SpaceWar", 1, 10, 5, 8080, "Zaragoza") ?
+    gestor.desplegarServidor("192.168.1.1", "SpaceWar", 1, 30, 5, 8080, "Zaragoza") ?
         cout << "[OK] Servidor ID:1 desplegado correctamente. Zaragoza (no existe)\n" : cout << "[EROR] Error al desplegar Servidor ID:1. Zaragoza\n";
 
     //AÑADO SEVILLA
@@ -65,9 +81,18 @@ void prueba()
     gestor.conectarServidor("192.168.1.3") ?
         cout<<"[OK] Servidor Almeria activado (esta en mantenimiento)\n" : cout<<"[ERROR] Error al activar servidor Almeria\n";
 
-    //PONER ALMERIA EN MANTENIMIENTO
-    //gestor.realizarMantenimiento("192.168.1.3") ?
-        //cout<<"[ERROR] Servidor Almeria puesto en mantenimiento\n" : cout<<"[OK] Error al poner servidor Almeria puesto en mantenimiento (esta activado)\n";
+
+
+    //PONER ZARAGOZA EN ACTIVO
+    gestor.conectarServidor("192.168.1.1");
+
+    Jugador j1 = crearJugador("David", 1, true, 20, 1000, "Huelva");
+
+    //ALOJAR JUGADOR
+    gestor.alojarJugador(j1, "SpaceWar", host, enEspera);
+
+    gestor.jugadorConectado("David") ?
+        cout<<"[OK] David si esta\n" : cout<<"[ERROR] David no esta\n";
 
     mostrarServidores(gestor);
 }
@@ -85,7 +110,7 @@ int menu()
         cout<<"1. Mostrar Servidor\n2. Crear Servidor\n3. Eliminar servidor\n4. ActivarServidor"<<endl;
         cout<<"5. Desactivar Servidor\n6. Programar mantenimiento de servidor\n7. Conectar jugador"<<endl;
         cout<<"8. Expulsar jugador\n9. Salir\n"<<endl;
-        cout<<"Indique la opcion deseada: ";
+        cout<<"> Seleccione una opcion: ";
         cin>>opcion;
         if(opcion<1 || opcion>9)
         {
@@ -100,13 +125,12 @@ int menu()
 
 int main()
 {
-    prueba();
     int opc;
+    GestorServidores gestor;
 
     do
     {
-        //opc = menu();
-        opc=9;
+        opc = menu();
 
         switch(opc)
         {
@@ -149,6 +173,11 @@ int main()
         case 8:
         {
 
+        } break;
+
+        case 9:
+        {
+            prueba();
         } break;
 
         }//fin switch
