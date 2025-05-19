@@ -105,25 +105,16 @@ bool GestorServidores::desconectarServidor(cadena dS)
             if(servidor->estaActivo())
             {
                 servidor->getNombreJuego(nombreJ);
-                int tamaC=servidor->getNumJugadoresConectados(), tamaE=servidor->getNumJugadoresEnEspera(), i=0;
-                Jugador *jugadoresC=new Jugador[tamaC], *jugadoresE=new Jugador[tamaE];
+                int tamaC=servidor->getNumJugadoresConectados(), i=0;
+                Jugador *jugadoresC=new Jugador[tamaC];
 
                 servidor->exportarJugadoresConectados(jugadoresC);
-                servidor->exportarJugadoresEnEspera(jugadoresE);
                 desactivado = servidor->desactivar();
 
                 ordenarPorLatencia(jugadoresC, tamaC);
                 while(i<tamaC && (alojado || enEspera))
                 {
                     alojado = alojarJugador(jugadoresC[i], nombreJ, hostS, enEspera);
-                    i++;
-                }
-                i=0;
-
-                ordenarPorLatencia(jugadoresE, tamaE);
-                while(i<tamaE && (alojado || enEspera))
-                {
-                    alojado = alojarJugador(jugadoresE[i], nombreJ, hostS, enEspera);
                     i++;
                 }
             }
