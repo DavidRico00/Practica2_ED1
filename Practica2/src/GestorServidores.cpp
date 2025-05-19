@@ -95,7 +95,7 @@ bool GestorServidores::desconectarServidor(cadena dS)
 {
     Servidor *servidor=primerServidor;
     cadena host, nombreJ, hostS;
-    bool enEspera=false, alojado=true, desactivado=false;;
+    bool enEspera=false, alojado=true, desactivado=false;
 
     while(servidor!=NULL)
     {
@@ -112,13 +112,15 @@ bool GestorServidores::desconectarServidor(cadena dS)
                 servidor->exportarJugadoresEnEspera(jugadoresE);
                 desactivado = servidor->desactivar();
 
+                ordenarPorLatencia(jugadoresC, tamaC);
                 while(i<tamaC && (alojado || enEspera))
                 {
                     alojado = alojarJugador(jugadoresC[i], nombreJ, hostS, enEspera);
                     i++;
                 }
-
                 i=0;
+
+                ordenarPorLatencia(jugadoresE, tamaE);
                 while(i<tamaE && (alojado || enEspera))
                 {
                     alojado = alojarJugador(jugadoresE[i], nombreJ, hostS, enEspera);
